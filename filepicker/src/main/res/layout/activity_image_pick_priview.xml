@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_image_pick"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_title_height"
+        android:background="@color/colorTop"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="#FFFFFF"
+        app:navigationIcon="@mipmap/button_top_close_gray"/>
+    <TextView
+        android:layout_marginTop="6dp"
+
+        android:id="@+id/btn_preview"
+        android:layout_width="@dimen/anniu_width"
+        android:layout_height="@dimen/anniu_height"
+        android:layout_marginRight="13dp"
+        android:layout_alignParentRight="true"
+        android:text="预览"
+        android:enabled="false"
+        android:gravity="center"
+        android:textSize="@dimen/dp_anniu_textsize"
+        android:textColor="@color/button_text_selector"
+        android:background="@drawable/release_btn_blue_selector"
+        />
+    <TextView
+        android:id="@+id/tv_title"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/dp_title_textsize"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image_pick"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BgRv"
+        android:layout_below="@+id/tb_image_pick"
+        android:layout_above="@+id/bottom_layout"
+        />
+
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_title_height"
+        android:background="@color/colorTop"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/btn_album"
+            android:layout_marginLeft="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/button_album"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vincent.filepicker">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.vincent.filepicker.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                />
+        </provider>
+
+
+        <activity
+            android:name=".activity.ImagePickActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.ImagePickSetImageActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.ImageBrowserActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.ImageBrowserActivityPickerAd"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.VideoPickActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.AudioPickActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.NormalFilePickActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity
+            android:name=".activity.ImageAlbumActivityPicker"
+            android:theme="@style/FilePickerTheme" />
+        <activity android:name=".activity.CrupActivity"></activity>
+        <activity android:name=".activity.ImageBrowserHeadActivityPicker"/>
+        <activity android:name=".activity.ImagePickActivityPriview"/>
+    </application>
+
+</manifest>
