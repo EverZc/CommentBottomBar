@@ -58,7 +58,7 @@ public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnIt
 
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.tb_image_pick);
-        mTitle= (TextView) findViewById(R.id.tv_title);
+        mTitle = (TextView) findViewById(R.id.tv_title);
         mTitle.setText("相册");
         setSupportActionBar(mToolbar);
         setTitle("");
@@ -108,9 +108,9 @@ public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnIt
                         albumFile.setImages(directories.get(0).getFiles());
                         mAblumFiles.add(albumFile);
                     }
-                    //Zc自己做的代码
+                    //Zc自定义
                 }*/
-                 for (Directory<ImageFile> director : directories) {
+                for (Directory<ImageFile> director : directories) {
                     AlbumFile albumFile = new AlbumFile();
                     albumFile.setImages(director.getFiles());
                     allAlbumFile.setImages(director.getFiles());

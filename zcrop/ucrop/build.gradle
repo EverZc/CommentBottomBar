@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "0.0.1"//定义版本标识
+
+/*publish {
+    userOrg = 'everzc'//bintray.com用户名
+    groupId = 'me.pandazhang'//jcenter上的路径
+    artifactId = 'Zcrop'//项目名称
+    publishVersion = '0.0.1'//版本号
+    desc = '自定义的剪裁图片样式库'//描述，不重要
+    website = 'https://github.com/everzc'//网站，最好有，不重要
+}*/
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    resourcePrefix 'ucrop_'
+
+    sourceSets.main {
+        jni.srcDirs = []
+    }
+
+}
+
+dependencies {
+    implementation (rootProject.ext.dependencies["appcompat-v7"]){
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation rootProject.ext.dependencies["annotations"]
+}
+
+

@@ -10,7 +10,7 @@
         android:supportsRtl="true">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.vincent.filepicker.provider"
+            android:authorities="com.vincent.filepicker.provider_me"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -34,9 +34,6 @@
             android:theme="@style/FilePickerTheme" />
         <activity
             android:name=".activity.VideoPickActivityPicker"
-            android:theme="@style/FilePickerTheme" />
-        <activity
-            android:name=".activity.AudioPickActivityPicker"
             android:theme="@style/FilePickerTheme" />
         <activity
             android:name=".activity.NormalFilePickActivityPicker"
