@@ -1,1 +1,1 @@
-include ':app', ':filepicker', ':ucrop', ':comment_bottombar'
+include ':app', ':filepicker', ':comment_bottombar'

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vincent.filepicker">
+    package="me.pandazhang.filepicker">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,7 +10,7 @@
         android:supportsRtl="true">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.vincent.filepicker.provider_me"
+            android:authorities="me.pandazhang.filepicker.provider_me"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -19,31 +19,24 @@
                 />
         </provider>
 
-
         <activity
-            android:name=".activity.ImagePickActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImagePickActivityPicker"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name=".activity.ImagePickSetImageActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImagePickSetImageActivityPicker"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name=".activity.ImageBrowserActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImageBrowserActivityPicker"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name=".activity.ImageBrowserActivityPickerAd"
+            android:name="me.pandazhang.filepicker.activity.ImageBrowserActivityPickerAd"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name=".activity.VideoPickActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImageAlbumActivityPicker"
             android:theme="@style/FilePickerTheme" />
-        <activity
-            android:name=".activity.NormalFilePickActivityPicker"
-            android:theme="@style/FilePickerTheme" />
-        <activity
-            android:name=".activity.ImageAlbumActivityPicker"
-            android:theme="@style/FilePickerTheme" />
-        <activity android:name=".activity.CrupActivity"></activity>
-        <activity android:name=".activity.ImageBrowserHeadActivityPicker"/>
-        <activity android:name=".activity.ImagePickActivityPriview"/>
+        <activity android:name="me.pandazhang.filepicker.activity.CrupActivity"></activity>
+        <activity android:name="me.pandazhang.filepicker.activity.ImageBrowserHeadActivityPicker"/>
+        <activity android:name="me.pandazhang.filepicker.activity.ImagePickActivityPriview"/>
     </application>
 
 </manifest>

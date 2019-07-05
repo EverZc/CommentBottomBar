@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.vincent.filepicker.FilePicker;
-import com.vincent.filepicker.activity.ImagePickActivityPicker;
+import me.pandazhang.filepicker.FilePicker;
+import me.pandazhang.filepicker.activity.ImagePickActivityPicker;
 
 public class MainActivity extends AppCompatActivity {
     public static final String IS_NEED_CAMERA = "IsNeedCamera";
