@@ -26,16 +26,16 @@
             android:name="me.pandazhang.filepicker.activity.ImagePickSetImageActivityPicker"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name="me.pandazhang.filepicker.activity.ImageBrowserActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImageBrowserMoreActivity"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name="me.pandazhang.filepicker.activity.ImageBrowserActivityPickerAd"
+            android:name="me.pandazhang.filepicker.activity.ImageBrowserAdActivity"
             android:theme="@style/FilePickerTheme" />
         <activity
-            android:name="me.pandazhang.filepicker.activity.ImageAlbumActivityPicker"
+            android:name="me.pandazhang.filepicker.activity.ImageAlbumActivity"
             android:theme="@style/FilePickerTheme" />
         <activity android:name="me.pandazhang.filepicker.activity.CrupActivity"></activity>
-        <activity android:name="me.pandazhang.filepicker.activity.ImageBrowserHeadActivityPicker"/>
+        <activity android:name="me.pandazhang.filepicker.activity.ImageBrowserOneActivity"/>
         <activity android:name="me.pandazhang.filepicker.activity.ImagePickActivityPriview"/>
     </application>
 

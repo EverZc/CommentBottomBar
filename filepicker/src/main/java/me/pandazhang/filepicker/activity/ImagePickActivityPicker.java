@@ -107,7 +107,7 @@ public class ImagePickActivityPicker extends PickerBaseActivity {
             @Override
             public void onClick(View view) {
                 //打开相册
-                Intent intent = new Intent(ImagePickActivityPicker.this, ImageAlbumActivityPicker.class);
+                Intent intent = new Intent(ImagePickActivityPicker.this, ImageAlbumActivity.class);
                 intent.putParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE, mSelectedList);
                 startActivityForResult(intent, FilePicker.REQUEST_CODE_ALBUM_IMAGE);
             }
@@ -132,7 +132,7 @@ public class ImagePickActivityPicker extends PickerBaseActivity {
         mPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageBrowserActivityPicker.launchActivity(ImagePickActivityPicker.this, mSelectedList.size(), mSelectedList, mWithAspectRatio);
+                ImageBrowserMoreActivity.launchActivity(ImagePickActivityPicker.this, mSelectedList.size(), mSelectedList, mWithAspectRatio);
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_image_pick);

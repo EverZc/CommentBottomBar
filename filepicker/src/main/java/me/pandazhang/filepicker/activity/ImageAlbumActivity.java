@@ -31,9 +31,7 @@ import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
  * Created by Zwj on 2019/07/05.
  */
 
-public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnItemClickListener<AlbumFile> {
-
-    private static final String TAG = ImageAlbumActivityPicker.class.getCanonicalName();
+public class ImageAlbumActivity extends PickerBaseActivity implements OnItemClickListener<AlbumFile> {
 
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
@@ -46,7 +44,6 @@ public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnIt
     void permissionGranted() {
         loadData();
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,15 +99,6 @@ public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnIt
             public void onResult(List<Directory<ImageFile>> directories) {
                 AlbumFile allAlbumFile = new AlbumFile();
                 int totalCount = 0;
-
-               /* for (int i = 0; i < directories.size(); i++) {
-                    if (i==0){
-                        AlbumFile albumFile = new AlbumFile();
-                        albumFile.setImages(directories.get(0).getFiles());
-                        mAblumFiles.add(albumFile);
-                    }
-                    //Zc自定义
-                }*/
                 for (Directory<ImageFile> director : directories) {
                     AlbumFile albumFile = new AlbumFile();
                     albumFile.setImages(director.getFiles());
@@ -118,12 +106,6 @@ public class ImageAlbumActivityPicker extends PickerBaseActivity implements OnIt
                     mAblumFiles.add(albumFile);
                     totalCount += director.getFiles().size();
                 }
-                /*
-               allAlbumFile.setBucketName("所有图片");
-                allAlbumFile.setCover(directories.get(0).getFiles().get(0).getPath());
-                allAlbumFile.setCount(totalCount);
-                //将新的 全部加在的这个相册集合添加在第一个位置上面
-                mAblumFiles.add(0, allAlbumFile);*/
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }

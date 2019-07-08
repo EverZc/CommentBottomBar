@@ -87,7 +87,7 @@ public class ImagePickSetImageActivityPicker extends PickerBaseActivity {
             @Override
             public void onClick(View view) {
                 //打开相册
-                Intent intent = new Intent(ImagePickSetImageActivityPicker.this, ImageAlbumActivityPicker.class);
+                Intent intent = new Intent(ImagePickSetImageActivityPicker.this, ImageAlbumActivity.class);
                 intent.putParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE, mSelectedList);
                 startActivityForResult(intent, FilePicker.REQUEST_CODE_ALBUM_IMAGE);
             }
@@ -97,7 +97,7 @@ public class ImagePickSetImageActivityPicker extends PickerBaseActivity {
         mPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageBrowserHeadActivityPicker.launchActivity(
+                ImageBrowserOneActivity.launchActivity(
                         ImagePickSetImageActivityPicker.this, mSelectedList.size(), mSelectedList, mWithAspectRatio);
             }
         });
@@ -113,7 +113,7 @@ public class ImagePickSetImageActivityPicker extends PickerBaseActivity {
             public void OnSelectStateChanged(boolean state, ImageFile file) {
                 mSelectedList.clear();
                 mSelectedList.add(file);
-                ImageBrowserHeadActivityPicker.launchActivity(
+                ImageBrowserOneActivity.launchActivity(
                         ImagePickSetImageActivityPicker.this, mSelectedList.size(), mSelectedList, mWithAspectRatio);
 
               /*  if (mMaxNumber == 1) {//单选

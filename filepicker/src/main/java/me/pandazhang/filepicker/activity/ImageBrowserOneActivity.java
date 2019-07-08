@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
@@ -33,17 +32,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-
-
-import static me.pandazhang.filepicker.FilePicker.RESULT_PICK_IMAGE;
-
 /**
- * 裁剪
+ * 选择单张以后，裁剪单张，常用于选择头像，修改头像操作
  * Created by Zwj
  * Date: 2019/07/05
  */
 
-public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
+public class ImageBrowserOneActivity extends PickerBaseActivity {
     public static final String IMAGE_BROWSER_INIT_INDEX = "ImageBrowserInitIndex";
     public static final String IMAGE_BROWSER_LIST = "ImageBrowserList";
     public static final String IMAGE_BROWSER_SELECTED_NUMBER = "ImageBrowserSelectedNumber";
@@ -58,10 +53,9 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
     private ImageBrowserAdapter mAdapter;
     private int[] mWithAspectRatio;
     private LinearLayout ll_container;
-    private boolean isCrap=false;
 
     public static void launchActivity(FragmentActivity activity, int maxNumber, ArrayList<ImageFile> selectList, int[] withAspectRatio){
-        Intent intent = new Intent(activity, ImageBrowserActivityPickerAd.class);
+        Intent intent = new Intent(activity, ImageBrowserOneActivity.class);
         intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
         intent.putParcelableArrayListExtra(IMAGE_BROWSER_LIST, selectList);
         intent.putExtra(FilePicker.WITH_ASPECT_RATIO, withAspectRatio);
@@ -76,18 +70,20 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_image_browser_ad);
+        setContentView(R.layout.activity_image_browser);
         mMaxNumber = getIntent().getIntExtra(FilePicker.MAX_NUMBER, ImagePickActivityPicker.DEFAULT_MAX_NUMBER);
         mSelectedList = getIntent().getParcelableArrayListExtra(IMAGE_BROWSER_LIST);
         mWithAspectRatio = getIntent().getIntArrayExtra(FilePicker.WITH_ASPECT_RATIO);
         super.onCreate(savedInstanceState);
+        intoPick();
     }
 
     private void initView() {
         ll_container= (LinearLayout) findViewById(R.id.ll_container);
         //ll_container.getBackground().setAlpha(51);
         mTbImagePick = (Toolbar) findViewById(R.id.tb_image_pick);
-        mTbImagePick.setTitle(mCurrentIndex + "/" + mMaxNumber);
+        mTbImagePick.setTitle("  ");
+        //mTbImagePick.setTitle(mCurrentIndex + "/" + mMaxNumber);
         setSupportActionBar(mTbImagePick);
         mTbImagePick.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,43 +96,17 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
         mConfrimView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isCrap){
-                    Intent intent = new Intent();
-                    intent.putParcelableArrayListExtra(RESULT_PICK_IMAGE, mSelectedList);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }else {
-                    Toast.makeText(ImageBrowserActivityPickerAd.this,"请先裁剪",Toast.LENGTH_SHORT).show();
-                }
-
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE, mSelectedList);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
         mCropView = (TextView) findViewById(R.id.btn_crop);
         mCropView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCropImage = mSelectedList.get(mViewPager.getCurrentItem());
-                Uri sourceUri = Util.path2Uri(ImageBrowserActivityPickerAd.this, mCropImage.getPath());
-
-                //裁剪后保存到文件中
-                // TODO 路径需要修改
-                String path = mCropImage.getPath();
-                String destination =  path.substring(path.lastIndexOf("/") + 1) + "crop_.jpeg";
-                Uri destinationUri = Uri.fromFile(new File(getCacheDir(), destination));
-                UCrop uCrop = UCrop.of(sourceUri, destinationUri);
-                UCrop.Options options = new UCrop.Options();
-                if (mWithAspectRatio != null) {
-                    uCrop.withAspectRatio(mWithAspectRatio[0], mWithAspectRatio[1]);
-                }else{
-                    options.setFreeStyleCropEnabled(true);
-                }
-                options.setHideBottomControls(true);
-                options.setToolbarTitle(" ");
-                options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.NONE, UCropActivity.ALL);
-                options.setToolbarColor(getResources().getColor(R.color.black));
-                options.setStatusBarColor(getResources().getColor(R.color.black));
-                uCrop.withOptions(options);
-                uCrop.start(ImageBrowserActivityPickerAd.this);
+                intoPick();
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.vp_image_pick);
@@ -152,7 +122,8 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mCurrentIndex = position + 1;
-                mTbImagePick.setTitle(mCurrentIndex + "/" + mMaxNumber);
+               // mTbImagePick.setTitle(mCurrentIndex + "/" + mMaxNumber);
+                mTbImagePick.setTitle("  ");
             }
 
             @Override
@@ -162,6 +133,31 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
         });
     }
 
+    private void intoPick(){
+        mCropImage = mSelectedList.get(mViewPager.getCurrentItem());
+        Uri sourceUri = Util.path2Uri(ImageBrowserOneActivity.this, mCropImage.getPath());
+
+        //裁剪后保存到文件中
+        // TODO 路径需要修改
+        String path = mCropImage.getPath();
+        String destination =  path.substring(path.lastIndexOf("/") + 1) + "crop_.jpeg";
+        Uri destinationUri = Uri.fromFile(new File(getCacheDir(), destination));
+        UCrop uCrop = UCrop.of(sourceUri, destinationUri);
+        UCrop.Options options = new UCrop.Options();
+        if (mWithAspectRatio != null) {
+            uCrop.withAspectRatio(mWithAspectRatio[0], mWithAspectRatio[1]);
+        }else{
+            options.setFreeStyleCropEnabled(true);
+        }
+        options.setHideBottomControls(true);
+        options.setToolbarTitle(" ");
+        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.NONE, UCropActivity.ALL);
+        options.setToolbarColor(getResources().getColor(R.color.black));
+        options.setStatusBarColor(getResources().getColor(R.color.black));
+        uCrop.withOptions(options);
+        uCrop.start(ImageBrowserOneActivity.this);
+    };
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -170,9 +166,12 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
             if (result != null){
                 String newPath = result.getPath();
                 if (mCropImage != null) {
-                    isCrap=true;
                     mCropImage.setPath(newPath);//这里只修改了路径
                     mAdapter.notifyDataSetChanged();
+                    Intent intent = new Intent();
+                    intent.putParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE, mSelectedList);
+                    setResult(RESULT_OK, intent);
+                    finish();
                     try {
                         String s = MediaStore.Images.Media.insertImage(getContentResolver(), newPath, "", "");
                         Log.e("onActivityResult", s);
@@ -187,10 +186,10 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
     private class ImageBrowserAdapter extends PagerAdapter {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            PhotoView view = new PhotoView(ImageBrowserActivityPickerAd.this);
+            PhotoView view = new PhotoView(ImageBrowserOneActivity.this);
             view.enable();
             view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            Glide.with(ImageBrowserActivityPickerAd.this)
+            Glide.with(ImageBrowserOneActivity.this)
                     .load(mSelectedList.get(position).getPath())
                     .into(view);
             container.addView(view);
@@ -233,17 +232,4 @@ public class ImageBrowserActivityPickerAd extends PickerBaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    private void finishThis() {
-//        Intent intent = new Intent();
-//        intent.putParcelableArrayListExtra(FilePicker.RESULT_BROWSER_IMAGE, mSelectedList);
-//        intent.putExtra(IMAGE_BROWSER_SELECTED_NUMBER, mCurrentNumber);
-//        setResult(RESULT_OK, intent);
-//        finish();
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        finishThis();
-//    }
 }
