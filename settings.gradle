@@ -1,1 +1,1 @@
-include ':app', ':filepicker', ':comment_bottombar'
+include ':app', ':CommentBottomBarLib'
