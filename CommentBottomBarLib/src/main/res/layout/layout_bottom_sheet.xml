@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+   >
+    <EditText
+        android:id="@+id/et_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="期待您的神回复"
+        android:maxLines="4"
+        android:outlineProvider="none"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/dp_sixteen"
+        android:paddingRight="@dimen/dp_sixteen"
+        android:paddingTop="8dp"
+        android:textColor="@color/colorFirstText"
+        android:textColorHint="@color/colorMinorText"
+        android:textSize="@dimen/sp_comment_text" />
+    <RelativeLayout
+        android:background="#f8f8f8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.RecyclerView
+
+            android:layout_centerVertical="true"
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_twelve"
+            android:paddingRight="@dimen/dp_sixteen"
+            android:paddingTop="@dimen/dp_five"
+            android:paddingBottom="@dimen/dp_five"
+            android:layout_toLeftOf="@+id/btn_comment"
+            android:layout_alignParentLeft="true"
+            ></android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/btn_comment"
+            android:elevation="0dp"
+            style="@style/commonButton"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:text="发表" />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="bottomSheetEdit" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="commonButton">
+        <item name="android:layout_width">67dp</item>
+        <item name="android:layout_height">@dimen/dp_twenty_nine</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">14dp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">@dimen/sp_fourteen</item>
+        <item name="android:background">@drawable/release_btn_blue_selector</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>
