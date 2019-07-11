@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/comment_head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="19dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        >
+        <com.makeramen.roundedimageview.RoundedImageView
+            app:riv_border_color="#00000000"
+            app:riv_corner_radius="4dp"
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/dp_headimage"
+            android:layout_height="@dimen/dp_headimage"
+            android:layout_marginRight="12dp"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_sixteen"
+            android:layout_toLeftOf="@+id/cb_praise"
+            />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dp_ten"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/cb_praise"
+            android:id="@+id/tv_praise_number"
+            android:textColor="#999"
+            android:textSize="16dp" />
+
+        <CheckBox
+            android:layout_centerVertical="true"
+            android:id="@+id/cb_praise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+
+            android:button="@null" />
+
+        <LinearLayout
+            android:layout_marginRight="@dimen/dp_thirty"
+            android:id="@+id/auther_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:gravity="center|left"
+            android:layout_toLeftOf="@+id/cb_praise"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:orientation="vertical">
+
+            <TextView
+                android:lines="1"
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="泸州"
+                android:textColor="@color/colorFriendNickname"
+                android:textSize="@dimen/sp_sixteen" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

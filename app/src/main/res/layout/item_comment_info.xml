@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--评论详情中item-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_comment_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_comment_padding_left">
+
+        <TextView
+
+            android:paddingRight="@dimen/dp_twelve"
+            android:id="@+id/tv_content"
+            android:lineSpacingExtra="0.1dp"
+            android:ellipsize="end"
+            android:layout_marginTop="5dp"
+            style="@style/middleTextStyle"
+            tools:text="1抓娃娃的话几百都要抓，这里几块钱就能买的到，我们抓的是心情~呵呵哒" />
+
+
+
+        <com.magicmoble.luzhouapp.mvp.ui.adapter.three.ThreeGridView
+            xmlns:ngv="http://schemas.android.com/tools"
+            android:id="@+id/threenvGallery"
+            android:layout_marginTop="@dimen/dp_fifteen"
+            android:layout_marginLeft="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingRight="16dp"
+            android:clickable="true"
+            android:visibility="gone"
+            ngv:gap6="6dp" />
+        <!--时间删除等-->
+
+        <FrameLayout
+            android:layout_marginTop="@dimen/dp_ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/layout_item_comment_bottom"
+                />
+        </FrameLayout>
+
+
+        <TextView
+            android:visibility="gone"
+            android:paddingRight="@dimen/dp_twelve"
+            android:id="@+id/tv_reply"
+            android:layout_marginBottom="@dimen/dp_fifteen"
+            style="@style/middleTextStyle"
+            tools:text="1抓娃娃的话几百都要抓，这里几块钱就能买的到，我们抓的是心情~呵呵哒" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

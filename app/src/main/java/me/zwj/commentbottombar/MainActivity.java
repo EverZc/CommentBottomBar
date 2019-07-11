@@ -3,18 +3,15 @@ package me.zwj.commentbottombar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import me.pandazhang.commentbottombarlib.ZBottomConstant;
 import me.pandazhang.commentbottombarlib.ZBottomSheetPictureBar;
 import me.pandazhang.filepicker.FilePicker;
+import me.pandazhang.filepicker.MyToastPK;
 import me.pandazhang.filepicker.activity.ImagePickActivityPicker;
 import me.pandazhang.filepicker.filter.entity.ImageFile;
 
@@ -24,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_PICK_IMAGE = 1;
     private Button mButtom;
 
-    private ZBottomSheetPictureBar bottomChildComment;
+    private ZBottomSheetPictureBar bottomComment;
     private ArrayList<ImageFile> mHuifuImages = new ArrayList<>(ZBottomConstant.ARTICLE_IMAGE_MAX);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         mButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomChildComment = ZBottomSheetPictureBar.delegation(MainActivity.this);
-                bottomChildComment.show("期待你的神回复");
-                bottomChildComment.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
+                bottomComment = ZBottomSheetPictureBar.delegation(MainActivity.this);
+                bottomComment.show("期待你的神回复");
+                bottomComment.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
                     @Override
                     public void onAddClick() {
                         Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
@@ -49,20 +46,18 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onDelClick(ImageFile imageFile, int position) {
-                        /*if (bottomChildComment.getAdapterData().contains(imageFile)) {
-                            LogUtils.e("发布评论删除图片 ："+imageFile.getPath().toString());
-                            bottomChildComment.getAdapterData().remove(imageFile);
-                            bottomChildComment.adapterNotifyDataSetChanged();
+                        if (bottomComment.getAdapterData().contains(imageFile)) {
+                            bottomComment.getAdapterData().remove(imageFile);
+                            bottomComment.adapterNotifyDataSetChanged();
                         }
                         if (mHuifuImages.contains(imageFile)) {
-                            LogUtils.e("发布评论删除图片 ："+imageFile.getPath().toString());
                             mHuifuImages.remove(imageFile);
-                        }*/
+                        }
                     }
 
                     @Override
                     public void onCommitClick() {
-
+                        MyToastPK.showSuccess("点击提交",MainActivity.this);
                         /*if (mHuifuImages.size() >= 1) {
                             pictureHuifuObservable().subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -72,17 +67,15 @@ public class MainActivity extends AppCompatActivity {
                                             EventBus.getDefault().post("", "addOneReply");
                                             mHuifuPicture = s;
                                             LogUtils.e("s : " + mHuifuPicture);
-                                            mPresenter.replyCommtent(data.userId, data.id, bottomChildComment.getCommentText()+"", data.id, mHuifuPicture, position, mCommentData);
+                                            mPresenter.replyCommtent(data.userId, data.id, bottomComment.getCommentText()+"", data.id, mHuifuPicture, position, mCommentData);
 
                                         }
                                     });
                         } else {
-                            mPresenter.replyCommtent(data.userId, data.id, bottomChildComment.getCommentText()+"", data.id, null, position, mCommentData);
+                            mPresenter.replyCommtent(data.userId, data.id, bottomComment.getCommentText()+"", data.id, null, position, mCommentData);
 
                         }*/
-
-                        bottomChildComment.dismiss();
-
+                        bottomComment.dismiss();
                     }
 
                     @Override
@@ -94,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < imageList.size(); i++) {
                             mHuifuImages.add(imageList.get(i));
                         }
-                        bottomChildComment.setImages(imageList);
+                        bottomComment.setImages(imageList);
                 }
                 break;
         }
