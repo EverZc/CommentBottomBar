@@ -58,23 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCommitClick() {
                         MyToastPK.showSuccess("点击提交",MainActivity.this);
-                        /*if (mHuifuImages.size() >= 1) {
-                            pictureHuifuObservable().subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Action1<String>() {
-                                        @Override
-                                        public void call(String s) {
-                                            EventBus.getDefault().post("", "addOneReply");
-                                            mHuifuPicture = s;
-                                            LogUtils.e("s : " + mHuifuPicture);
-                                            mPresenter.replyCommtent(data.userId, data.id, bottomComment.getCommentText()+"", data.id, mHuifuPicture, position, mCommentData);
-
-                                        }
-                                    });
-                        } else {
-                            mPresenter.replyCommtent(data.userId, data.id, bottomComment.getCommentText()+"", data.id, null, position, mCommentData);
-
-                        }*/
                         bottomComment.dismiss();
                     }
 
