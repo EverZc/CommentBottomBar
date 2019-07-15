@@ -129,7 +129,6 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
             tvContent.setText(item.content);
             tvReply.setVisibility(View.GONE);
         } else {
-
             tvReply.setVisibility(View.GONE);
             SpannableStringBuilder stringBuilder = new SpannableStringUtils.Builder()
                     .append(item.content)

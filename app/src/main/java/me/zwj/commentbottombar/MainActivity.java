@@ -3,6 +3,7 @@ package me.zwj.commentbottombar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,7 +19,10 @@ import me.pandazhang.filepicker.filter.entity.ImageFile;
 
 public class MainActivity extends AppCompatActivity {
     public static final String IS_NEED_CAMERA = "IsNeedCamera";
-    public static final int REQUEST_CODE_PICK_IMAGE = 1;
+
+    private DetailCommentAdapter adapter;
+    private View mActicalHead;
+
     private Button mButtom;
 
     private ZBottomSheetPictureBar bottomComment;
@@ -27,8 +31,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+    }
 
-        mButtom=findViewById(R.id.buttom);
+    // header 方案：  写死一个固定的头部样式  不通过json了！！
+    private void initView() {
+        mActicalHead = LayoutInflater.from(this).inflate(R.layout.layout_header_actical, null, false);
+        adapter=new DetailCommentAdapter(new ArrayList<Detail.ReplyComment>());
+
+        adapter.addHeaderView(mActicalHead);
+    }
+
+
+    private void onClick(){
         mButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

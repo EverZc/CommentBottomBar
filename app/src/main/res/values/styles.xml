@@ -22,5 +22,24 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="padding14">
+        <item name="android:paddingLeft">@dimen/dp_fourteen</item>
+        <item name="android:paddingRight">@dimen/dp_fourteen</item>
+    </style>
+
+    <style name="bigTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="splitLineLR">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_zero_tow_five</item>
+        <item name="android:background">#e8e8e8</item>
+    </style>
 
 </resources>
