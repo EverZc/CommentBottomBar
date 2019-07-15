@@ -119,16 +119,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         TextView tvContent = helper.getView(R.id.tv_content);
         //有回复的目标
         TextView tvReply = helper.getView(R.id.tv_reply);
-       /* SpannableStringBuilder stringBuilder = new SpannableStringUtils.Builder()
-                .append(item.content)
-                .append("@")
-                .setForegroundColor(mContext.getResources().getColor(R.color.colorSecondText))
-                .append(item.pinglunerName)
-                .setForegroundColor(mContext.getResources().getColor(R.color.colorFriendNickname))
-                .append(" : " + item.contented)
-                .setForegroundColor(mContext.getResources().getColor(R.color.colorSecondText))
-                .create();
-        tvReply.setText(stringBuilder);*/
+
        if (item.content.length()==0){
            tvContent.setVisibility(View.GONE);
        }else {
