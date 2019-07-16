@@ -30,7 +30,7 @@
 
 
 
-        <com.magicmoble.luzhouapp.mvp.ui.adapter.three.ThreeGridView
+        <me.zwj.commentbottombar.ThreeGridView
             xmlns:ngv="http://schemas.android.com/tools"
             android:id="@+id/threenvGallery"
             android:layout_marginTop="@dimen/dp_fifteen"

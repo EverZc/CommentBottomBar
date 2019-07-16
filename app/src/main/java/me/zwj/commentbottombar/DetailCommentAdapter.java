@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static me.zwj.commentbottombar.Detail.ReplyComment;
 
 /**
  * Created by Zwj on 2019/07/10 .
@@ -82,7 +81,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
             public void onClick(View v) {
                 if (mListener != null) {
                     //LogUtils.e("getParentPosition(item) : "+helper.getAdapterPosition());
-                    mListener.onHuiFuDeleteClick(item.id, helper.getAdapterPosition() - 1);
+                    mListener.onHuiFuDeleteClick("", helper.getAdapterPosition() - 1);
                 }
             }
         });
@@ -143,7 +142,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         }
 
 
-        helper.setText(R.id.tv_time, timeConvertUtil(item.time)+"");
+       // helper.setText(R.id.tv_time, timeConvertUtil(item.time)+"");
         //helper.setText(R.id.tv_time, TimeUtils.millis2String(item.time, "yyyy-MM-dd mm:ss"));
         final CheckBox favourView = helper.getView(R.id.cb_praise);
         favourView.setSelected(item.isFavour);
@@ -183,7 +182,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         });
         ThreeGridView llPicture = helper.getView(R.id.threenvGallery);
 
-        List<Detail.Picture> pictureHuifu = item.picture;
+        List<Picture> pictureHuifu = item.picture;
         if (pictureHuifu == null || pictureHuifu.size() == 0) {
             llPicture.setVisibility(View.GONE);
 
@@ -226,7 +225,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
 
 
     public interface OnCommentReplyClickListener {
-        void onUserClick(Detail.ReplyComment comment);
+        void onUserClick(ReplyComment comment);
 
         void onFavourClick(ReplyComment comment);
 

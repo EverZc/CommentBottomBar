@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:id="@+id/ll_content"
-        android:visibility="gone"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -233,9 +233,9 @@
                 android:id="@+id/iv_cover_type_bigimage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_one_hundred_seventy"
-                android:layout_marginTop="@dimen/dp_thirteen"
+                android:layout_marginTop="13dp"
                 android:scaleType="centerCrop"
-                android:src="13sp" />
+               />
 
             <LinearLayout
                 android:layout_width="match_parent"
