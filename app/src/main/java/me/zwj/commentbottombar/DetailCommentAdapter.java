@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -98,7 +100,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         }else {
             favourCountView.setTextColor(mContext.getResources().getColor(R.color.colorSmallText));
         }
-       // helper.loadImage(R.id.iv_avatar, item.avatar);
+        ImageView ivHeadImage= helper.getView(R.id.iv_avatar);
         helper.getView(R.id.iv_avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +108,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
                 mListener.onUserClick(item);
             }
         });
+        Glide.with(mContext).load(item.avatar).into(ivHeadImage);
         helper.setText(R.id.tv_author, item.userName);
         helper.getView(R.id.tv_author).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,10 +186,13 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         ThreeGridView llPicture = helper.getView(R.id.threenvGallery);
 
         List<Picture> pictureHuifu = item.picture;
+
         if (pictureHuifu == null || pictureHuifu.size() == 0) {
             llPicture.setVisibility(View.GONE);
+            Log.e("pictureHuifu","pictureHuifu gone");
 
         } else {
+            Log.e("pictureHuifu","pictureHuifu visible");
             llPicture.setVisibility(View.VISIBLE);
             mPictureList = new ArrayList();
             if (item.picture.size() > 0) {
@@ -206,14 +212,6 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
             llPicture.setOnImageClickListener(new ThreeGridView.OnImageClickListener() {
                 @Override
                 public void onImageCilcked(int position, View view) {
-                   /* Bundle bundle = new Bundle();
-                    Intent intent = new Intent(mContext, ImageDetailsActivity.class);
-                    bundle.putStringArrayList("detailpicture", requestPicture);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("page", position);
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);*/
-                    //mContext.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
             });
 

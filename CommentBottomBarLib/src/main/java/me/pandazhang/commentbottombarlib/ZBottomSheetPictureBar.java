@@ -224,10 +224,6 @@ public class ZBottomSheetPictureBar {
         }
     }
 
-    public EditText getEditText() {
-        return mEditText;
-    }
-
     public String getCommentText() {
         String result = "";
         if (mEditText.getText().toString().trim() != null) {
@@ -238,8 +234,19 @@ public class ZBottomSheetPictureBar {
         return result;
     }
 
+
+    public EditText getEditText() {
+        return mEditText;
+    }
+
     public TextView getBtnCommit() {
         return mBtnCommit;
+    }
+
+    public void clear(){
+        mEditText.setText("");
+        mImages.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     /**

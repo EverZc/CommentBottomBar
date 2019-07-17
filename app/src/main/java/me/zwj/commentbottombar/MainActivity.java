@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.pandazhang.commentbottombarlib.ZBottomConstant;
 import me.pandazhang.commentbottombarlib.ZBottomSheetPictureBar;
@@ -42,20 +44,18 @@ public class MainActivity extends AppCompatActivity {
     private ZBottomSheetPictureBar bottomComment;
     private ArrayList<ImageFile> mHuifuImages = new ArrayList<>(ZBottomConstant.ARTICLE_IMAGE_MAX);
     private RecyclerView mRecyclerView;
-
-    private ArrayList mData=new ArrayList<ReplyComment>();
+    private ArrayList mData = new ArrayList<ReplyComment>();
+    private List<Picture> mCommitImages = new ArrayList<>(ZBottomConstant.ARTICLE_IMAGE_MAX);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
     }
 
-
     private void initView() {
-        mActicalHead = LayoutInflater.from(this).inflate(R.layout.layout_header_actical, null, false);
+        // mActicalHead = LayoutInflater.from(this).inflate(R.layout.layout_header_actical, null, false);
         mHeaderLayout = LayoutInflater.from(this).inflate(R.layout.item_comment_info, null, false);
         adapter = new DetailCommentAdapter(mData);
         mRecyclerView = findViewById(R.id.recycler_view);
@@ -64,76 +64,91 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter.addHeaderView(mActicalHead);
+        // adapter.addHeaderView(mActicalHead);
         adapter.addHeaderView(mHeaderLayout);
-        initHeader();
+        adapter.setOnCommentClickListenre(new DetailCommentAdapter.OnCommentReplyClickListener() {
+            @Override
+            public void onUserClick(ReplyComment comment) {
+
+            }
+
+            @Override
+            public void onFavourClick(ReplyComment comment) {
+
+            }
+
+            @Override
+            public void onContentClick(ReplyComment comment) {
+
+            }
+
+            @Override
+            public void onHuiFuDeleteClick(String id, int position) {
+
+            }
+        });
+        // initHeader();
         initAutherHeader();
     }
 
     private void initAutherHeader() {
         //评论内容
-        TextView contentView = (TextView) mHeaderLayout.findViewById(R.id.tv_content);
-        contentView.setText("内容");
-        contentView.setVisibility(View.VISIBLE);
+        TextView tvContent = (TextView) mHeaderLayout.findViewById(R.id.tv_content);
+        tvContent.setText("欢迎使用CommentBottomBar,你可以点击回复来体验CommentBottomBar！～");
         //删除评论
-        TextView deleteComment = (TextView) mHeaderLayout.findViewById(R.id.iv_delete_comment);
-        deleteComment.setVisibility(View.GONE);
-
+        TextView tvDelete = (TextView) mHeaderLayout.findViewById(R.id.iv_delete_comment);
+        tvDelete.setVisibility(View.GONE);
         //头像
-        RoundedImageView avatarView = (RoundedImageView) mHeaderLayout.findViewById(R.id.iv_avatar);
-        avatarView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Glide.with(this).load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3677209778,3519789803&fm=27&gp=0.jpg").
-                asBitmap().placeholder(R.mipmap.ic_launcher).into(avatarView);
-
-        TextView ivComment = (TextView) mHeaderLayout.findViewById(R.id.iv_comment);
-        int huifuNumber = 10;
-
-        if (huifuNumber == 0) {
-            ivComment.setText("回复");
-        } else {
-            ivComment.setText(huifuNumber + "回复");
-        }
+        RoundedImageView headImage = (RoundedImageView) mHeaderLayout.findViewById(R.id.iv_avatar);
+        Glide.with(this).load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3677209778,3519789803&fm=27&gp=0.jpg")
+                .placeholder(R.mipmap.ic_launcher).into(headImage);
+        //回复
+        TextView tvComment = (TextView) mHeaderLayout.findViewById(R.id.iv_comment);
+        tvComment.setText("回复");
         //点击评论
-        ivComment.setOnClickListener(new View.OnClickListener() {
+        tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                bottomComment = ZBottomSheetPictureBar.delegation(MainActivity.this);
+                if (bottomComment==null){
+                    bottomComment = ZBottomSheetPictureBar.delegation(MainActivity.this);
+                }
                 bottomComment.show("期待您的神回复");
                 bottomComment.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
                     @Override
                     public void onAddClick() {
 
+                        Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
+                        intent.putExtra(IS_NEED_CAMERA, true);
+                        int maxNumber = mHuifuImages.isEmpty() ? ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - mHuifuImages.size();
+                        intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
+                        startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
 
                     }
 
                     @Override
                     public void onDelClick(ImageFile imageFile, int position) {
                         if (bottomComment.getAdapterData().contains(imageFile)) {
-
                             bottomComment.getAdapterData().remove(imageFile);
                             bottomComment.adapterNotifyDataSetChanged();
                         }
                         if (mHuifuImages.contains(imageFile)) {
-
                             mHuifuImages.remove(imageFile);
                         }
                     }
 
                     @Override
                     public void onCommitClick() {
-                       ReplyComment comment=new ReplyComment();
-                       comment.setMemo("我的签名");
-                       comment.setContent("我回复的内容。。");
-
-                       mData.add(comment);
-                       adapter.notifyDataSetChanged();
+                        ReplyComment comment = new ReplyComment();
+                        comment.setUserName("游客");
+                        comment.setContent(bottomComment.getCommentText());
+                        comment.setAvatar("http://img3.imgtn.bdimg.com/it/u=1295558289,215361504&fm=26&gp=0.jpg");
+                        Log.e("mcommit size ",mCommitImages.size()+"");comment.getPicture().add(new Picture());
+                        mData.add(comment);
+                        adapter.notifyDataSetChanged();
                         bottomComment.dismiss();
+                        mCommitImages.clear();
+                        mHuifuImages.clear();
+                        bottomComment.clear();
                     }
 
                     @Override
@@ -143,34 +158,15 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        //名字
-        TextView titleView = (TextView) mHeaderLayout.findViewById(R.id.tv_author);
-        titleView.setText("张文靖同学");
+        //昵称
+        TextView tvNickName = (TextView) mHeaderLayout.findViewById(R.id.tv_author);
+        tvNickName.setText("张文靖同学");
         //时间
-        TextView timeView = (TextView) mHeaderLayout.findViewById(R.id.tv_time);
-        timeView.setText("2019/07/16");
-        //点赞数
-        TextView favourCountView = (TextView) mHeaderLayout.findViewById(R.id.tv_praise_number);
-        favourCountView.setText(String.format("%s", 999));
-        favourCountView.setVisibility(View.VISIBLE);
-
-        if (true) {
-            favourCountView.setTextColor(getResources().getColor(R.color.colorRemind));
-        } else {
-            favourCountView.setTextColor(getResources().getColor(R.color.colorSmallText));
-        }
-        CheckBox praiseView = (CheckBox) mHeaderLayout.findViewById(R.id.cb_praise);
-        praiseView.setSelected(true);
-        praiseView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+        TextView tvTime = (TextView) mHeaderLayout.findViewById(R.id.tv_time);
+        tvTime.setText("2019/07/16");
+        //评论的图片内容
         ThreeGridView pictureLayout = (ThreeGridView) mHeaderLayout.findViewById(R.id.threenvGallery);
-
-            pictureLayout.setVisibility(View.GONE);
+        pictureLayout.setVisibility(View.GONE);
 
     }
 
@@ -294,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void onClick() {
         mButtom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,6 +341,9 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<ImageFile> imageList = data.getParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE);
                     for (int i = 0; i < imageList.size(); i++) {
                         mHuifuImages.add(imageList.get(i));
+                        Picture mPicture=new Picture();
+                        mPicture.setPictureUrl(imageList.get(i).getPath());
+                        mCommitImages.add(mPicture);
                     }
                     bottomComment.setImages(imageList);
                 }

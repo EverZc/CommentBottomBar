@@ -9,7 +9,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <include layout="@layout/item_comment_head" />
+    <include layout="@layout/layout_comment_head" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:ellipsize="end"
             android:layout_marginTop="5dp"
             style="@style/middleTextStyle"
-            tools:text="1抓娃娃的话几百都要抓，这里几块钱就能买的到，我们抓的是心情~呵呵哒" />
+            tools:text="呵呵哒" />
 
 
 
@@ -63,6 +63,10 @@
 
     </LinearLayout>
 
+    <View
+        android:background="#EBE9E9"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
 
 </LinearLayout>
 

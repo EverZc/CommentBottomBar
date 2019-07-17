@@ -29,10 +29,6 @@ public class ReplyComment {
     @SerializedName("be_huifu_content")
     @Expose
     public String contented;
-
-    @SerializedName("huifuer_qianming")
-    @Expose
-    public String memo;
     @SerializedName("time")
     @Expose
     public Long time;
@@ -97,14 +93,6 @@ public class ReplyComment {
 
     public void setContented(String contented) {
         this.contented = contented;
-    }
-
-    public String getMemo() {
-        return memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
     }
 
     public Long getTime() {
