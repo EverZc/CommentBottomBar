@@ -3,41 +3,43 @@ package me.zwj.commentbottombar;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReplyComment {
+import me.pandazhang.commentbottombarlib.ZBottomConstant;
+
+public class ReplyComment implements Serializable {
 
     @SerializedName("huifuer_touxiang")
     @Expose
-    public String avatar;
+    private String avatar;
     @SerializedName("dianzan_count")
     @Expose
-    public int favourCounr;
+    private int favourCounr;
     @SerializedName("isdianzan")
     @Expose
-    public boolean isFavour;
+    private boolean isFavour;
     @SerializedName("pingluner_name")
     @Expose
-    public String pinglunerName;
+    private String pinglunerName;
     @SerializedName("huifuer_name")
     @Expose
-    public String userName;
+    private String userName;
     @SerializedName("huifu_content")
     @Expose
-    public String content;
+    private String content;
     @SerializedName("be_huifu_content")
     @Expose
-    public String contented;
+    private String contented;
     @SerializedName("time")
     @Expose
-    public Long time;
-    @SerializedName("picture")
-    @Expose
-    public List<Picture> picture=new ArrayList<>();//评论的回复
+    private Long time;
+
+    private List<Picture> picture = new ArrayList<Picture>(ZBottomConstant.ARTICLE_IMAGE_MAX);//评论的回复
     @SerializedName("is_identical")
     @Expose
-    public boolean isIdentical;//评论的回复
+    private boolean isIdentical;//评论的回复
 
     public String getAvatar() {
         return avatar;

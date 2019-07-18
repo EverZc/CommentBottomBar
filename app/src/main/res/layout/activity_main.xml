@@ -19,6 +19,7 @@
         android:background="@color/white">
 
         <TextView
+            android:onClick="mainOnClick"
             android:id="@+id/tv_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +28,8 @@
             android:layout_centerVertical="true"
             android:textColor="@color/colorMinorText"
             android:layout_toLeftOf="@+id/iv_share"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="OnClick" />
 
         <ImageView
             android:visibility="gone"

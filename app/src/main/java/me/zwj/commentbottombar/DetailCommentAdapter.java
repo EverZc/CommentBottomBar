@@ -1,16 +1,9 @@
 package me.zwj.commentbottombar;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,10 +45,10 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
     protected void convert(final BaseViewHolder helper, final ReplyComment item) {
         ArrayList<String> mData = new ArrayList<>();
         mData.clear();
-        if (item.picture.size()>0){
-            for (int i = 0; i < item.picture.size(); i++) {
-                mData.add(item.picture.get(i).pictureUrl);
-                requestPicture.add(item.picture.get(i).pictureUrl + "");
+        if (item.getPicture().size()>0){
+            for (int i = 0; i < item.getPicture().size(); i++) {
+                mData.add(item.getPicture().get(i).pictureUrl);
+                requestPicture.add(item.getPicture().get(i).pictureUrl + "");
             }
         }
         //隐藏回复按钮
@@ -83,19 +76,19 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
             public void onClick(View v) {
                 if (mListener != null) {
                     //LogUtils.e("getParentPosition(item) : "+helper.getAdapterPosition());
-                    mListener.onHuiFuDeleteClick("", helper.getAdapterPosition() - 1);
+                    mListener.onDeleteClick("", helper.getAdapterPosition() - 1);
                 }
             }
         });
         //点赞数
         final TextView favourCountView = helper.getView(R.id.tv_praise_number);
-        favourCountView.setText(item.favourCounr+"");
-        if (item.favourCounr == 0) {
+        favourCountView.setText(item.getFavourCounr()+"");
+        if (item.getFavourCounr() == 0) {
             favourCountView .setVisibility(View.GONE);
         }else {
             favourCountView .setVisibility(View.VISIBLE);
         }
-        if (item.isFavour){
+        if (item.isFavour()){
             favourCountView.setTextColor(mContext.getResources().getColor(R.color. colorRemind));
         }else {
             favourCountView.setTextColor(mContext.getResources().getColor(R.color.colorSmallText));
@@ -108,8 +101,8 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
                 mListener.onUserClick(item);
             }
         });
-        Glide.with(mContext).load(item.avatar).into(ivHeadImage);
-        helper.setText(R.id.tv_author, item.userName);
+        Glide.with(mContext).load(item.getAvatar()).into(ivHeadImage);
+        helper.setText(R.id.tv_author, item.getUserName());
         helper.getView(R.id.tv_author).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,23 +115,23 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         //有回复的目标
         TextView tvReply = helper.getView(R.id.tv_reply);
 
-       if (item.content.length()==0){
+       if (item.getContent().length()==0){
            tvContent.setVisibility(View.GONE);
        }else {
            tvContent.setVisibility(View.VISIBLE);
        }
-        if (!item.isIdentical) {
-            tvContent.setText(item.content);
+        if (!item.isIdentical()) {
+            tvContent.setText(item.getContent());
             tvReply.setVisibility(View.GONE);
         } else {
             tvReply.setVisibility(View.GONE);
             SpannableStringBuilder stringBuilder = new SpannableStringUtils.Builder()
-                    .append(item.content)
+                    .append(item.getContent())
                     .append(" @")
                     .setForegroundColor(mContext.getResources().getColor(R.color.colorSecondText))
-                    .append(item.pinglunerName)
+                    .append(item.getPinglunerName())
                     .setForegroundColor(mContext.getResources().getColor(R.color.colorFriendNickname))
-                    .append(" " + item.contented)
+                    .append(" " + item.getContented())
                     .setForegroundColor(mContext.getResources().getColor(R.color.colorSmallText))
                     .create();
             tvContent.setText(stringBuilder);
@@ -147,46 +140,11 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
 
        // helper.setText(R.id.tv_time, timeConvertUtil(item.time)+"");
         //helper.setText(R.id.tv_time, TimeUtils.millis2String(item.time, "yyyy-MM-dd mm:ss"));
-        final CheckBox favourView = helper.getView(R.id.cb_praise);
-        favourView.setSelected(item.isFavour);
-        favourView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!v.isSelected()) {
-                    favourCountView.setTextColor(mContext.getResources().getColor(R.color. colorRemind));
-                    item.isFavour = true;
-                    item.favourCounr++;
-                    if (item.favourCounr == 0) {
-                        favourCountView.setVisibility(View.GONE);
-                    } else {
-                        favourCountView.setVisibility(View.VISIBLE);
-                    }
-                    favourCountView.setText(String.format("%s", item.favourCounr));
-                    favourView.setSelected(item.isFavour);
-                    if (mListener != null) {
-                        mListener.onFavourClick(item);
-                    }
-                } else {
-                    favourCountView.setTextColor(mContext.getResources().getColor(R.color.colorSmallText));
-                    item.isFavour = false;
-                    item.favourCounr--;
-                    if (item.favourCounr == 0) {
-                        favourCountView.setVisibility(View.GONE);
-                    } else {
-                        favourCountView.setVisibility(View.VISIBLE);
-                    }
-                    favourCountView.setText(String.format("%s", item.favourCounr));
-                    favourView.setSelected(item.isFavour);
-                    if (mListener != null) {
-                        mListener.onFavourClick(item);
-                    }
-                }
-            }
-        });
+
         ThreeGridView llPicture = helper.getView(R.id.threenvGallery);
 
-        List<Picture> pictureHuifu = item.picture;
-
+        List<Picture> pictureHuifu = item.getPicture();
+        Log.e("pictureHuifu",pictureHuifu.size()+"");
         if (pictureHuifu == null || pictureHuifu.size() == 0) {
             llPicture.setVisibility(View.GONE);
             Log.e("pictureHuifu","pictureHuifu gone");
@@ -195,10 +153,10 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
             Log.e("pictureHuifu","pictureHuifu visible");
             llPicture.setVisibility(View.VISIBLE);
             mPictureList = new ArrayList();
-            if (item.picture.size() > 0) {
-                for (int i = 0; i < item.picture.size(); i++) {
-                    mPictureList.add(item.picture.get(i).pictureUrl + "");
-                    requestPicture.add(item.picture.get(i).pictureUrl + "");
+            if (item.getPicture().size() > 0) {
+                for (int i = 0; i < item.getPicture().size(); i++) {
+                    mPictureList.add(item.getPicture().get(i).pictureUrl + "");
+                    requestPicture.add(item.getPicture().get(i).pictureUrl + "");
                 }
             }
             threeAdapter = new ThreeAdapter(mContext, mPictureList);
@@ -229,7 +187,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
 
         void onContentClick(ReplyComment comment);
 
-        void onHuiFuDeleteClick(String id, int position);
+        void onDeleteClick(String id, int position);
     }
 
     public static String timeConvertUtil(long time) {

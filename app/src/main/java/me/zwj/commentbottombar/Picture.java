@@ -3,7 +3,9 @@ package me.zwj.commentbottombar;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Picture {
+import java.io.Serializable;
+
+public class Picture  implements Serializable {
     @SerializedName("picture_url")
     @Expose
     public String pictureUrl;
