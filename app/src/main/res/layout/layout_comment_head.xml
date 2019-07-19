@@ -32,15 +32,6 @@
             android:layout_marginRight="@dimen/dp_sixteen"
             android:layout_toLeftOf="@+id/cb_praise"
             />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="@dimen/dp_ten"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/cb_praise"
-            android:id="@+id/tv_praise_number"
-            android:textColor="#999"
-            android:textSize="16dp" />
 
         <CheckBox
             android:layout_centerVertical="true"

@@ -45,55 +45,24 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
     protected void convert(final BaseViewHolder helper, final ReplyComment item) {
         ArrayList<String> mData = new ArrayList<>();
         mData.clear();
-        if (item.getPicture().size()>0){
+        if (item.getPicture().size() > 0) {
             for (int i = 0; i < item.getPicture().size(); i++) {
                 mData.add(item.getPicture().get(i).pictureUrl);
                 requestPicture.add(item.getPicture().get(i).pictureUrl + "");
             }
         }
         //隐藏回复按钮
-        TextView huifuComment = helper.getView(R.id.iv_comment);
-        huifuComment.setText("回复");
-       /* helper.getView(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
+        TextView tvReply = helper.getView(R.id.iv_comment);
+        tvReply.setText("回复");
+        tvReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener == null) return;
                 mListener.onContentClick(item);
             }
-        });*/
-       huifuComment.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (mListener == null) return;
-               mListener.onContentClick(item);
-           }
-       });
-        //删除评论
-        TextView deleteComment = helper.getView(R.id.iv_delete_comment);
-
-        deleteComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    //LogUtils.e("getParentPosition(item) : "+helper.getAdapterPosition());
-                    mListener.onDeleteClick("", helper.getAdapterPosition() - 1);
-                }
-            }
         });
-        //点赞数
-        final TextView favourCountView = helper.getView(R.id.tv_praise_number);
-        favourCountView.setText(item.getFavourCounr()+"");
-        if (item.getFavourCounr() == 0) {
-            favourCountView .setVisibility(View.GONE);
-        }else {
-            favourCountView .setVisibility(View.VISIBLE);
-        }
-        if (item.isFavour()){
-            favourCountView.setTextColor(mContext.getResources().getColor(R.color. colorRemind));
-        }else {
-            favourCountView.setTextColor(mContext.getResources().getColor(R.color.colorSmallText));
-        }
-        ImageView ivHeadImage= helper.getView(R.id.iv_avatar);
+
+        ImageView ivHeadImage = helper.getView(R.id.iv_avatar);
         helper.getView(R.id.iv_avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,45 +81,21 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         });
         //回复详情的内容
         TextView tvContent = helper.getView(R.id.tv_content);
-        //有回复的目标
-        TextView tvReply = helper.getView(R.id.tv_reply);
-
-       if (item.getContent().length()==0){
-           tvContent.setVisibility(View.GONE);
-       }else {
-           tvContent.setVisibility(View.VISIBLE);
-       }
-        if (!item.isIdentical()) {
-            tvContent.setText(item.getContent());
-            tvReply.setVisibility(View.GONE);
+        if (item.getContent().length() == 0) {
+            tvContent.setVisibility(View.GONE);
         } else {
-            tvReply.setVisibility(View.GONE);
-            SpannableStringBuilder stringBuilder = new SpannableStringUtils.Builder()
-                    .append(item.getContent())
-                    .append(" @")
-                    .setForegroundColor(mContext.getResources().getColor(R.color.colorSecondText))
-                    .append(item.getPinglunerName())
-                    .setForegroundColor(mContext.getResources().getColor(R.color.colorFriendNickname))
-                    .append(" " + item.getContented())
-                    .setForegroundColor(mContext.getResources().getColor(R.color.colorSmallText))
-                    .create();
-            tvContent.setText(stringBuilder);
+            tvContent.setVisibility(View.VISIBLE);
         }
-
-
-       // helper.setText(R.id.tv_time, timeConvertUtil(item.time)+"");
-        //helper.setText(R.id.tv_time, TimeUtils.millis2String(item.time, "yyyy-MM-dd mm:ss"));
+        tvContent.setText(item.getContent());
+        helper.setText(R.id.tv_time, timeConvertUtil(item.getTime()) + "");
 
         ThreeGridView llPicture = helper.getView(R.id.threenvGallery);
 
         List<Picture> pictureHuifu = item.getPicture();
-        Log.e("pictureHuifu",pictureHuifu.size()+"");
+
         if (pictureHuifu == null || pictureHuifu.size() == 0) {
             llPicture.setVisibility(View.GONE);
-            Log.e("pictureHuifu","pictureHuifu gone");
-
         } else {
-            Log.e("pictureHuifu","pictureHuifu visible");
             llPicture.setVisibility(View.VISIBLE);
             mPictureList = new ArrayList();
             if (item.getPicture().size() > 0) {
@@ -172,12 +117,8 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
                 public void onImageCilcked(int position, View view) {
                 }
             });
-
-
         }
-
     }
-
 
 
     public interface OnCommentReplyClickListener {

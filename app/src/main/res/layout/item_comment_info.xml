@@ -53,20 +53,22 @@
         </FrameLayout>
 
 
-        <TextView
-            android:visibility="gone"
-            android:paddingRight="@dimen/dp_twelve"
-            android:id="@+id/tv_reply"
-            android:layout_marginBottom="@dimen/dp_fifteen"
-            style="@style/middleTextStyle"
-            tools:text="1抓娃娃的话几百都要抓，这里几块钱就能买的到，我们抓的是心情~呵呵哒" />
+
 
     </LinearLayout>
 
     <View
+        android:id="@+id/head_padding"
+        android:visibility="gone"
         android:background="#EBE9E9"
         android:layout_width="match_parent"
         android:layout_height="8dp"/>
+    <View
+
+        android:background="#EBE9E9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
 
 </LinearLayout>
 
