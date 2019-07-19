@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
                     mPicture.setPictureUrl(mCommentList.get(i).getPath());
                     comment.getPicture().add(mPicture);
                     Log.e("size", comment.getPicture().size() + "");
-
                 }
                 mAdapter.addData(comment);
                 mAdapter.notifyDataSetChanged();

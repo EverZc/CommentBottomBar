@@ -43,7 +43,7 @@ public class ZBottomSheetPictureBar {
     private ZBottomSheetAdapter mAdapter;
     private boolean isFirstMax=true;
     private ArrayList<ImageFile> mImages = new ArrayList<>(ZBottomConstant.ARTICLE_COMMENT_IMAGE_MAX);
-    // private EmojiView mEmojiView;
+
     private ZBottomSheetPictureBar(Context context) {
         this.mContext = context;
     }
