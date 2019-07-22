@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import me.pandazhang.commentbottombarlib.ZBottomConstant;
 import me.pandazhang.commentbottombarlib.ZBottomSheetPictureBar;
 import me.pandazhang.filepicker.FilePicker;
+import me.pandazhang.filepicker.MyToastPK;
 import me.pandazhang.filepicker.activity.ImagePickActivityPicker;
 import me.pandazhang.filepicker.filter.entity.ImageFile;
 
@@ -29,11 +31,7 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
     private RecyclerView mRecyclerView;
     private TextView tvComment;
     private ZBottomSheetPictureBar commentZBSP; //评论的弹出框
-
     private DetailCommentAdapter mAdapter;
-
-    private ArrayList<ImageFile> mCommentList = new ArrayList<>(ZBottomConstant.ARTICLE_IMAGE_MAX);
-    private ArrayList<ReplyComment> mData = new ArrayList<ReplyComment>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
             }
         });
         headerLayout = LayoutInflater.from(this).inflate(R.layout.item_comment_info, null, false);
-        mAdapter = new DetailCommentAdapter(mData);
+        mAdapter = new DetailCommentAdapter(new ArrayList<ReplyComment>());
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setAdapter(mAdapter);
         //添加布局管理器
@@ -107,46 +105,38 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
             public void onAddClick() {
                 Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
                 intent.putExtra(IS_NEED_CAMERA, true);
-                int maxNumber = mCommentList.isEmpty() ? ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - mCommentList.size();
+                int maxNumber = commentZBSP.getAdapterData().isEmpty() ?
+                        ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getAdapterData().size();
                 intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
                 startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
             }
 
             @Override
-            public void onDelClick(ImageFile imageFile, int position) {
+            public void onDeleteClick(ImageFile imageFile, int position) {
                 if (commentZBSP.getAdapterData().contains(imageFile)) {
                     commentZBSP.getAdapterData().remove(imageFile);
-                    commentZBSP.adapterNotifyDataSetChanged();
-                }
-                if (mCommentList.contains(imageFile)) {
-                    mCommentList.remove(imageFile);
+                    commentZBSP.getAdapter().notifyDataSetChanged();
                 }
             }
 
             @Override
-            public void onCommitClick() {
+            public void onCommitClick(ArrayList<ImageFile> images, EditText editText) {
                 ReplyComment comment = new ReplyComment();
                 comment.setUserName("游客");
-                comment.setContent(commentZBSP.getCommentText());
+                comment.setContent(editText.getText().toString());
                 comment.setAvatar("http://img3.imgtn.bdimg.com/it/u=1295558289,215361504&fm=26&gp=0.jpg");
                 comment.setTime(
-                System.currentTimeMillis());
-                for (int i = 0; i < mCommentList.size(); i++) {
+                        System.currentTimeMillis());
+                for (int i = 0; i < images.size(); i++) {
                     Picture mPicture = new Picture();
-                    mPicture.setPictureUrl(mCommentList.get(i).getPath());
+                    mPicture.setPictureUrl(images.get(i).getPath());
                     comment.getPicture().add(mPicture);
                     Log.e("size", comment.getPicture().size() + "");
                 }
                 mAdapter.addData(comment);
                 mAdapter.notifyDataSetChanged();
                 commentZBSP.dismiss();
-                mCommentList.clear();
                 commentZBSP.clear();
-            }
-
-            @Override
-            public void onDissmiss() {
-
             }
         });
     }
@@ -158,9 +148,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
             case ZBottomConstant.REQUEST_CODE_PICK_IMAGE:
                 if (resultCode == RESULT_OK) {
                     ArrayList<ImageFile> imageList = data.getParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE);
-                    for (int i = 0; i < imageList.size(); i++) {
-                        mCommentList.add(imageList.get(i));
-                    }
                     commentZBSP.setImages(imageList);
                 }
                 break;
@@ -171,13 +158,14 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
     //如下四个是adapter中的四个回调。
     @Override
     public void onUserClick(ReplyComment comment) {
-
+        MyToastPK.showSuccess("用户头像",this);
     }
 
     @Override
     public void onFavourClick(ReplyComment comment) {
-
+        MyToastPK.showSuccess("点击点赞",this);
     }
+
 
     @Override
     public void onContentClick(ReplyComment comment) {
@@ -187,6 +175,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
 
     @Override
     public void onDeleteClick(String id, int position) {
-
+        MyToastPK.showSuccess("点击评论删除",this);
     }
 }

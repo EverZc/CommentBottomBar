@@ -26,9 +26,7 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
 
     private OnCommentReplyClickListener mListener;
     private ArrayList mPictureList;
-
     private ThreeAdapter threeAdapter;
-    private int huifuNumber;
 
     //遍历点击详情中的图片
     private ArrayList<String> requestPicture = new ArrayList<String>();

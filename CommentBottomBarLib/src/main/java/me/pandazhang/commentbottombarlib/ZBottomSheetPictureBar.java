@@ -32,17 +32,19 @@ import me.pandazhang.filepicker.filter.entity.ImageFile;
 @SuppressWarnings("unused")
 public class ZBottomSheetPictureBar {
     public static final int ARTICLE_COMMENT_IMAGE_MAX = 3;//最大能添加几张图片
-
+    private Context mContext;
     private View mRootView;
     private EditText mEditText;
-
-    private Context mContext;
     private TextView mBtnCommit;
-    private ZBottomDialog mDialog;
     private RecyclerView mRecyclerView;
+
+    private ZBottomDialog mDialog;
     private ZBottomSheetAdapter mAdapter;
+
     private boolean isFirstMax=true;
     private ArrayList<ImageFile> mImages = new ArrayList<>(ZBottomConstant.ARTICLE_COMMENT_IMAGE_MAX);
+    private OnSheetBarOnClickListener mListener;
+
 
     private ZBottomSheetPictureBar(Context context) {
         this.mContext = context;
@@ -66,7 +68,7 @@ public class ZBottomSheetPictureBar {
             @Override
             public void onClick(View view) {
                 if (mListener!=null){
-                    mListener.onCommitClick();
+                    mListener.onCommitClick(mImages,mEditText);
                     mBtnCommit.setEnabled(false);
                 }
             }
@@ -77,16 +79,11 @@ public class ZBottomSheetPictureBar {
         mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-
                 hideSoftInput(mContext, mEditText);
                 mDialog.hide();
-                if (mListener!=null){
-                    mListener.onDissmiss();
-                }
-//                mFrameLayout.setVisibility(View.GONE);
+
             }
         });
-
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,14 +99,10 @@ public class ZBottomSheetPictureBar {
             public void afterTextChanged(Editable s) {
                 if (mImages.size()>0||mEditText.getText().length()>0){
                     if (s.length()>1000){
-
                         if (isFirstMax){
                             MyToastPK.showError("评论最大字数限制1000字",mContext);
-
                             isFirstMax=false;
                         }
-
-
                         mBtnCommit.setEnabled(false);
                     }else {
                         mBtnCommit.setEnabled(true);
@@ -139,7 +132,7 @@ public class ZBottomSheetPictureBar {
             @Override
             public void onDelClick(ImageFile imageFile,int position) {
                 if (mListener!=null){
-                    mListener.onDelClick(imageFile,position);
+                    mListener.onDeleteClick(imageFile,position);
                 }
                 if (mImages.size()>0||mEditText.getText().length()>0){
                     if (mEditText.getText().length()>500){
@@ -150,7 +143,6 @@ public class ZBottomSheetPictureBar {
                 }else {
                     mBtnCommit.setEnabled(false);
                 }
-
             }
 
             @Override
@@ -177,22 +169,17 @@ public class ZBottomSheetPictureBar {
     public void dismiss() {
         hideSoftInput(mContext, mEditText);
         mDialog.dismiss();
-        if (mListener!=null){
-            mListener.onDissmiss();
-        }
-    }
 
-    public void setCommitListener(View.OnClickListener listener) {
-        mBtnCommit.setOnClickListener(listener);
     }
 
     public interface  OnSheetBarOnClickListener{
+        //添加图片
         void onAddClick();
-        void onDelClick(ImageFile imageFile,int position);
-        void onCommitClick();
-        void onDissmiss();
+        //图片删除
+        void onDeleteClick(ImageFile imageFile, int position);
+        //评论提交
+        void onCommitClick(ArrayList<ImageFile> images,EditText editText);
     }
-    private OnSheetBarOnClickListener mListener;
 
     public void setOnSeetBarOnClickListener(OnSheetBarOnClickListener listener){
         this.mListener=listener;
@@ -202,28 +189,18 @@ public class ZBottomSheetPictureBar {
         mBtnCommit.setEnabled(true);
         mAdapter.addData(mImagess);
         mAdapter.notifyDataSetChanged();
-
     }
 
+    //获取当前已选择的数组资源
     public ArrayList<ImageFile> getAdapterData(){
         return mImages;
     }
 
-    public void adapterNotifyDataSetChanged(){
-        mAdapter.notifyDataSetChanged();
+    public ZBottomSheetAdapter getAdapter(){
+        return mAdapter;
     }
 
-    public void handleSelectFriendsResult(Intent data) {
-        String names[] = data.getStringArrayExtra("names");
-        if (names != null && names.length > 0) {
-            String text = "";
-            for (String n : names) {
-                text += "@" + n + " ";
-            }
-            mEditText.getText().insert(mEditText.getSelectionEnd(), text);
-        }
-    }
-
+    //获取评论的内容 并且对
     public String getCommentText() {
         String result = "";
         if (mEditText.getText().toString().trim() != null) {
@@ -234,15 +211,11 @@ public class ZBottomSheetPictureBar {
         return result;
     }
 
-
     public EditText getEditText() {
         return mEditText;
     }
 
-    public TextView getBtnCommit() {
-        return mBtnCommit;
-    }
-
+    //清理评论文本内容以及评论的图片内容。
     public void clear(){
         mEditText.setText("");
         mImages.clear();
@@ -274,6 +247,4 @@ public class ZBottomSheetPictureBar {
         if (imm == null) return;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-
 }
