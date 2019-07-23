@@ -10,9 +10,8 @@
 
 ## 效果图
 
-|模式|图片
-|---|---|
-|第一个模式|![效果示例](https://upload-images.jianshu.io/upload_images/4677908-78fefb287880dfe1.gif?imageMogr2/auto-orient/strip)|
+
+[效果示例](https://upload-images.jianshu.io/upload_images/4677908-78fefb287880dfe1.gif?imageMogr2/auto-orient/strip)
 
 
 ## 方法
