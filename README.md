@@ -20,9 +20,81 @@
 |delegation(Context context)|构造方法
 |appendText(String text)|拼接评论文字
 |show(String hint)|弹出评论框并填写评论的hint
+|dismiss()|隐藏评论弹出框，并隐藏软键盘
+|setImages(ArrayList<ImageFile> mImagess)|添加图片
+|getAdapterData()|获取当前评论框内的图片
+|getAdapter()|获取弹出框图片的adapter
+|getCommentText()|获取评论的内容
+|clear()|清理评论文本内容以及评论的图片内容
+ 
 ## 使用步骤
 
-#### Step 1.依赖CommentBottomBar
+#### Step 1.添加依赖CommentBottomBar
+首先要在项目的根`build.gradle`下添加：
+```
+allprojects {
+	repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+然后要在要依赖的module中添加
+```
+dependencies {
+    implementation 'com.github.EverZc:CommentBottomBar:latest.release.here'
+}
+```
+
+#### Step 2.使用流程
+CommentBottomBar使用起来非常简单
+```
+    private ZBottomSheetPictureBar commentZBSP; //评论的弹出框
+            if (commentZBSP == null) {
+            commentZBSP = ZBottomSheetPictureBar.delegation(MainActivity.this);
+        }
+        commentZBSP.show("期待您的神回复");
+        commentZBSP.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
+            @Override
+            public void onAddClick() {
+                Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
+                intent.putExtra(IS_NEED_CAMERA, true);
+                int maxNumber = commentZBSP.getAdapterData().isEmpty() ?
+                        ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getAdapterData().size();
+                intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
+                startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
+            }
+
+            @Override
+            public void onDeleteClick(ImageFile imageFile, int position) {
+                if (commentZBSP.getAdapterData().contains(imageFile)) {
+                    commentZBSP.getAdapterData().remove(imageFile);
+                    commentZBSP.getAdapter().notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCommitClick(ArrayList<ImageFile> images, EditText editText) {
+                ReplyComment comment = new ReplyComment();
+                comment.setUserName("游客");
+                comment.setContent(editText.getText().toString());
+                comment.setAvatar("http://img3.imgtn.bdimg.com/it/u=1295558289,215361504&fm=26&gp=0.jpg");
+                comment.setTime(
+                        System.currentTimeMillis());
+                for (int i = 0; i < images.size(); i++) {
+                    Picture mPicture = new Picture();
+                    mPicture.setPictureUrl(images.get(i).getPath());
+                    comment.getPicture().add(mPicture);
+                    Log.e("size", comment.getPicture().size() + "");
+                }
+                mAdapter.addData(comment);
+                mAdapter.notifyDataSetChanged();
+                commentZBSP.dismiss();
+                commentZBSP.clear();
+            }
+        });
+```
+
+
 
 
 ## 混淆代码
