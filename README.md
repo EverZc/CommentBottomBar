@@ -1,19 +1,18 @@
 # CommentBottomBar
-底部弹窗评论文字+评论图片功能
-[![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+[![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## 新框架发布，欢迎大家Star
 
 <br>
 
-此处是描述。
+底部弹窗控件，可以填写评论文字以及评论图片。图片选择框架使用[Zfilepicker](https://github.com/EverZc/Zfilepicker)，本框架无需处理复杂的逻辑，只需要简单调用即可。
 
 ## 效果图
 
 |模式|图片
 |---|---|
-|第一个模式|![效果示例](https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3677209778,3519789803&fm=27&gp=0.jpg)|
+|第一个模式|![效果示例](https://upload-images.jianshu.io/upload_images/4677908-78fefb287880dfe1.gif?imageMogr2/auto-orient/strip)|
 
 
 ## 方法
