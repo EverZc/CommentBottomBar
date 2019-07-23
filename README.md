@@ -15,10 +15,11 @@
 
 
 ## 方法
-|方法名|描述|版本限制
-|---|---|---|
-|getCommentText（）| 评论内容）|无
-
+|方法名|描述|
+|---|---|
+|delegation(Context context)|构造方法
+|appendText(String text)|拼接评论文字
+|show(String hint)|弹出评论框并填写评论的hint
 ## 使用步骤
 
 #### Step 1.依赖CommentBottomBar
