@@ -112,18 +112,10 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
             }
 
             @Override
-            public void onDeleteClick(ImageFile imageFile, int position) {
-                if (commentZBSP.getAdapterData().contains(imageFile)) {
-                    commentZBSP.getAdapterData().remove(imageFile);
-                    commentZBSP.getAdapter().notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCommitClick(ArrayList<ImageFile> images, EditText editText) {
+            public void onCommitClick(ArrayList<ImageFile> images, EditText content) {
                 ReplyComment comment = new ReplyComment();
                 comment.setUserName("游客");
-                comment.setContent(editText.getText().toString());
+                comment.setContent(content.getText().toString());
                 comment.setAvatar("http://img3.imgtn.bdimg.com/it/u=1295558289,215361504&fm=26&gp=0.jpg");
                 comment.setTime(
                         System.currentTimeMillis());

@@ -31,7 +31,7 @@ import me.pandazhang.filepicker.filter.entity.ImageFile;
  */
 @SuppressWarnings("unused")
 public class ZBottomSheetPictureBar {
-    public static final int ARTICLE_COMMENT_IMAGE_MAX = 3;//最大能添加几张图片
+
     private Context mContext;
     private View mRootView;
     private EditText mEditText;
@@ -81,7 +81,6 @@ public class ZBottomSheetPictureBar {
             public void onDismiss(DialogInterface dialog) {
                 hideSoftInput(mContext, mEditText);
                 mDialog.hide();
-
             }
         });
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -131,9 +130,11 @@ public class ZBottomSheetPictureBar {
 
             @Override
             public void onDelClick(ImageFile imageFile,int position) {
-                if (mListener!=null){
-                    mListener.onDeleteClick(imageFile,position);
+                if (mImages.contains(imageFile)) {
+                    mImages.remove(imageFile);
+                    mAdapter.notifyDataSetChanged();
                 }
+
                 if (mImages.size()>0||mEditText.getText().length()>0){
                     if (mEditText.getText().length()>500){
                         mBtnCommit.setEnabled(false);
@@ -153,54 +154,43 @@ public class ZBottomSheetPictureBar {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    //拼接评论文字
     public void appendText(String text) {
         if (!TextUtils.isEmpty(text)) {
             mEditText.append(text);
         }
     }
 
+    //弹出评论框并填写评论的hint
     public void show(String hint) {
+        mEditText.setHint(hint);
         mDialog.show();
-        if (!"添加评论".equals(hint)) {
-            mEditText.setHint(hint + "");
-        }
     }
 
+    //隐藏评论弹出框，并隐藏软键盘
     public void dismiss() {
         hideSoftInput(mContext, mEditText);
         mDialog.dismiss();
-
     }
 
-    public interface  OnSheetBarOnClickListener{
-        //添加图片
-        void onAddClick();
-        //图片删除
-        void onDeleteClick(ImageFile imageFile, int position);
-        //评论提交
-        void onCommitClick(ArrayList<ImageFile> images,EditText editText);
-    }
-
-    public void setOnSeetBarOnClickListener(OnSheetBarOnClickListener listener){
-        this.mListener=listener;
-    }
-
+    //添加图片
     public void setImages(ArrayList<ImageFile> mImagess) {
         mBtnCommit.setEnabled(true);
         mAdapter.addData(mImagess);
         mAdapter.notifyDataSetChanged();
     }
 
-    //获取当前已选择的数组资源
+    //获取当前评论框内的图片
     public ArrayList<ImageFile> getAdapterData(){
         return mImages;
     }
 
+    //获取弹出框图片的adapter
     public ZBottomSheetAdapter getAdapter(){
         return mAdapter;
     }
 
-    //获取评论的内容 并且对
+    //获取评论的内容
     public String getCommentText() {
         String result = "";
         if (mEditText.getText().toString().trim() != null) {
@@ -222,12 +212,19 @@ public class ZBottomSheetPictureBar {
         mAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 动态显示软键盘
-     *
-     * @param edit 输入框
-     */
-    public static void showSoftInput(EditText edit,Context context) {
+    public interface  OnSheetBarOnClickListener{
+        //添加图片
+        void onAddClick();
+        //评论提交
+        void onCommitClick(ArrayList<ImageFile> images,EditText content);
+    }
+
+    public void setOnSeetBarOnClickListener(OnSheetBarOnClickListener listener){
+        this.mListener=listener;
+    }
+
+    //动态显示软键盘
+    private  void showSoftInput(EditText edit,Context context) {
         edit.setFocusable(true);
         edit.setFocusableInTouchMode(true);
         edit.requestFocus();
@@ -236,13 +233,8 @@ public class ZBottomSheetPictureBar {
         imm.showSoftInput(edit, 0);
     }
 
-    /**
-     * 动态隐藏软键盘
-     *
-     * @param context 上下文
-     * @param view    视图
-     */
-    public static void hideSoftInput(Context context, View view) {
+    //动态隐藏软键盘
+    private void hideSoftInput(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) return;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
