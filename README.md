@@ -48,54 +48,40 @@ dependencies {
 #### Step 2.使用流程
 CommentBottomBar使用起来非常简单
 ```
-    private ZBottomSheetPictureBar commentZBSP; //评论的弹出框
-            if (commentZBSP == null) {
-            commentZBSP = ZBottomSheetPictureBar.delegation(MainActivity.this);
+
+    ZBottomSheetPictureBar commentZBSP = ZBottomSheetPictureBar.delegation(MainActivity.this);
+    commentZBSP.show("期待您的神回复");
+    commentZBSP.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
+        @Override
+        public void onAddClick() {
+            Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
+            intent.putExtra(IS_NEED_CAMERA, true);
+            int maxNumber = commentZBSP.getAdapterData().isEmpty() ?
+                    ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getAdapterData().size();
+            intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
+            startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
         }
-        commentZBSP.show("期待您的神回复");
-        commentZBSP.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
-            @Override
-            public void onAddClick() {
-                Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
-                intent.putExtra(IS_NEED_CAMERA, true);
-                int maxNumber = commentZBSP.getAdapterData().isEmpty() ?
-                        ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getAdapterData().size();
-                intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
-                startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
-            }
 
-            @Override
-            public void onDeleteClick(ImageFile imageFile, int position) {
-                if (commentZBSP.getAdapterData().contains(imageFile)) {
-                    commentZBSP.getAdapterData().remove(imageFile);
-                    commentZBSP.getAdapter().notifyDataSetChanged();
-                }
-            }
+        @Override
+        public void onCommitClick(ArrayList<ImageFile> images, EditText editText) {
+          //此处是点击按钮，具体处理处理提交评论的文字以及图片
+        }
+    });
 
-            @Override
-            public void onCommitClick(ArrayList<ImageFile> images, EditText editText) {
-                ReplyComment comment = new ReplyComment();
-                comment.setUserName("游客");
-                comment.setContent(editText.getText().toString());
-                comment.setAvatar("http://img3.imgtn.bdimg.com/it/u=1295558289,215361504&fm=26&gp=0.jpg");
-                comment.setTime(
-                        System.currentTimeMillis());
-                for (int i = 0; i < images.size(); i++) {
-                    Picture mPicture = new Picture();
-                    mPicture.setPictureUrl(images.get(i).getPath());
-                    comment.getPicture().add(mPicture);
-                    Log.e("size", comment.getPicture().size() + "");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ZBottomConstant.REQUEST_CODE_PICK_IMAGE:
+                //获取选择的图片
+                if (resultCode == RESULT_OK) {
+                    ArrayList<ImageFile> imageList = data.getParcelableArrayListExtra(FilePicker.RESULT_PICK_IMAGE);
+                    commentZBSP.setImages(imageList);
                 }
-                mAdapter.addData(comment);
-                mAdapter.notifyDataSetChanged();
-                commentZBSP.dismiss();
-                commentZBSP.clear();
-            }
-        });
+                break;
+        }
+    }
 ```
-
-
-
 
 ## 混淆代码
 ```java
@@ -109,28 +95,14 @@ CommentBottomBar使用起来非常简单
 -keep class me.zwj.commentbottombar.** {
     *;
  }
-
 ```
-
 
 ## 常见问题
 
-* 问：如何自定图片记载框架？
+* 问：如何自定图片加载框架？
 
-    * 答：欢迎自定义使用本人的另一个图片加载框架
+    * 答：欢迎自定义使用本人的另一个图片加载框架，如果使用自定义的框架只要图片的实体修改为ImageFile即可使用。
 
-
-## Thanks
-
-- [暂无](https://www.baidu.com)
-
-## 更新说明
-
-#### v1.0.0
-     更新版本的说明
-
- * 具体更新的条目说明1
- * 具体更新的条目说明2
 
 ### 联系方式
 * 我的简书：https://www.jianshu.com/u/197319888337 有兴趣的也可以关注，大家一起交流

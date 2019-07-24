@@ -26,7 +26,6 @@ import me.pandazhang.filepicker.filter.entity.ImageFile;
 
 public class MainActivity extends AppCompatActivity implements DetailCommentAdapter.OnCommentReplyClickListener{
     public static final String IS_NEED_CAMERA = "IsNeedCamera";
-
     private View headerLayout;
     private RecyclerView mRecyclerView;
     private TextView tvComment;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
         //评论内容
         TextView tvContent = (TextView) headerLayout.findViewById(R.id.tv_content);
         tvContent.setText("欢迎使用CommentBottomBar,你可以点击回复来体验CommentBottomBar！～");
-
         //头像
         RoundedImageView headImage = (RoundedImageView) headerLayout.findViewById(R.id.iv_avatar);
         Glide.with(this).load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3677209778,3519789803&fm=27&gp=0.jpg")
@@ -145,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
                 break;
         }
     }
-
-
     //如下四个是adapter中的四个回调。
     @Override
     public void onUserClick(ReplyComment comment) {
@@ -162,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
     @Override
     public void onContentClick(ReplyComment comment) {
         mainOnClick();
-
     }
 
     @Override
