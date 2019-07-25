@@ -17,15 +17,15 @@
 ## 方法
 |方法名|描述|
 |---|---|
-|delegation(Context context)|构造方法
-|appendText(String text)|拼接评论文字
+|delegation(Context context)|创建方法
 |show(String hint)|弹出评论框并填写评论的hint
 |dismiss()|隐藏评论弹出框，并隐藏软键盘
-|setImages(ArrayList<ImageFile> mImagess)|添加图片
+|setImages(ArrayList<ImageFile> images)|添加图片
 |getAdapterData()|获取当前评论框内的图片
 |getAdapter()|获取弹出框图片的adapter
 |getCommentText()|获取评论的内容
 |clear()|清理评论文本内容以及评论的图片内容
+|appendText(String text)|拼接评论文字
  
 ## 使用步骤
 
@@ -48,9 +48,11 @@ dependencies {
 #### Step 2.使用流程
 CommentBottomBar使用起来非常简单
 ```
-
+    //第一步：初始化控件
     ZBottomSheetPictureBar commentZBSP = ZBottomSheetPictureBar.delegation(MainActivity.this);
+    //第二步：弹出底部评论栏，并设置hint
     commentZBSP.show("期待您的神回复");
+    //第三步：设置控件内的点击回调（添加图片以及提交按钮）
     commentZBSP.setOnSeetBarOnClickListener(new ZBottomSheetPictureBar.OnSheetBarOnClickListener() {
         @Override
         public void onAddClick() {
@@ -68,6 +70,7 @@ CommentBottomBar使用起来非常简单
         }
     });
 
+    //第四步：处理选择的图片，设置到弹窗控件中。
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

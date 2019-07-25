@@ -29,9 +29,8 @@ import me.pandazhang.filepicker.filter.entity.ImageFile;
  * Created by Zwj on 2019/07/09.
  * 底部弹出评论框 用于RecycleView 中的Item
  */
-@SuppressWarnings("unused")
-public class ZBottomSheetPictureBar {
 
+public class ZBottomSheetPictureBar {
     private Context mContext;
     private View mRootView;
     private EditText mEditText;
@@ -44,7 +43,6 @@ public class ZBottomSheetPictureBar {
     private boolean isFirstMax=true;
     private ArrayList<ImageFile> mImages = new ArrayList<>(ZBottomConstant.ARTICLE_COMMENT_IMAGE_MAX);
     private OnSheetBarOnClickListener mListener;
-
 
     private ZBottomSheetPictureBar(Context context) {
         this.mContext = context;
@@ -174,9 +172,9 @@ public class ZBottomSheetPictureBar {
     }
 
     //添加图片
-    public void setImages(ArrayList<ImageFile> mImagess) {
+    public void setImages(ArrayList<ImageFile> images) {
         mBtnCommit.setEnabled(true);
-        mAdapter.addData(mImagess);
+        mAdapter.addData(images);
         mAdapter.notifyDataSetChanged();
     }
 
