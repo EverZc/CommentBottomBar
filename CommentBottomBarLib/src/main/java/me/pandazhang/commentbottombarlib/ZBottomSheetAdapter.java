@@ -62,28 +62,15 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ZBottomSheetHolder imageHolder = (ZBottomSheetHolder) holder;
         final View itemView = imageHolder.getItemView();
-        //AutoUtils.autoSize(itemView);
-        if (mMaxCount==3){  //判断如果最大图片为三张的时候,为多图模式  80%的高度
-            itemView.post(new Runnable() {
-                @Override
-                public void run() {
-                    ViewGroup.LayoutParams params = itemView.getLayoutParams();
-                    params.height = (int) (itemView.getMeasuredWidth());
-                    itemView.setLayoutParams(params);
-                }
-            });
+        itemView.post(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams params = itemView.getLayoutParams();
+                params.height = (int) (itemView.getMeasuredWidth());
+                itemView.setLayoutParams(params);
+            }
+        });
 
-        }else {     //判断如果最大图片为9张的时候,为发布朋友圈的模式,100%高度
-            itemView.post(new Runnable() {
-                @Override
-                public void run() {
-                    ViewGroup.LayoutParams params = itemView.getLayoutParams();
-                    params.height=itemView.getMeasuredWidth();
-                    //params.height = (int) (itemView.getMeasuredWidth() * 0.8);
-                    itemView.setLayoutParams(params);
-                }
-            });
-        }
 
         imageHolder.setOnReleaseImageListener(onReleaseImageListener);
         switch (getItemViewType(position)){

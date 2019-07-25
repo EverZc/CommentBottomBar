@@ -34,9 +34,7 @@ public class ThreeAdapter extends NineGridViewDefaultAdapter<String> {
 
     @Override
     public View getView(int position, View recycleView) {
-
         final String url = getItem(position);
-
         ImageView imageView;
         if (recycleView == null) {
             imageView = generialDefaultImageView();
@@ -44,12 +42,6 @@ public class ThreeAdapter extends NineGridViewDefaultAdapter<String> {
             imageView = (ImageView) recycleView;
         }
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-       /* Glide.with(context).load(Uri.parse(url))
-                .placeholder(R.mipmap.position_square_big)
-                .crossFade()
-                .dontAnimate()
-                .into(imageView);*/
 
         Glide.with(context)
                 .load(url)

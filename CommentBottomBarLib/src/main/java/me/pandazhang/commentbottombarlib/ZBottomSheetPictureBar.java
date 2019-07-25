@@ -3,7 +3,6 @@ package me.pandazhang.commentbottombarlib;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -41,7 +40,7 @@ public class ZBottomSheetPictureBar {
     private ZBottomSheetAdapter mAdapter;
 
     private boolean isFirstMax=true;
-    private ArrayList<ImageFile> mImages = new ArrayList<>(ZBottomConstant.ARTICLE_COMMENT_IMAGE_MAX);
+    private ArrayList<ImageFile> mImages = new ArrayList<>(ZBottomConstant.ARTICLE_IMAGE_MAX);
     private OnSheetBarOnClickListener mListener;
 
     private ZBottomSheetPictureBar(Context context) {
@@ -117,7 +116,7 @@ public class ZBottomSheetPictureBar {
         mRecyclerView.setLayoutManager(layoutManager);
         DividerGridItemDecoration itemDecoration = new DividerGridItemDecoration(mContext, R.drawable.image_divider_shape);
         mRecyclerView.addItemDecoration(itemDecoration);
-        mAdapter = new ZBottomSheetAdapter(mContext, mImages, ZBottomConstant.ARTICLE_COMMENT_IMAGE_MAX);
+        mAdapter = new ZBottomSheetAdapter(mContext, mImages, ZBottomConstant.ARTICLE_IMAGE_MAX);
         mAdapter.setOnReleaseImageListener(new ZBottomSheetHolder.OnReleaseImageListener() {
             @Override
             public void onAddClick() {
@@ -204,7 +203,7 @@ public class ZBottomSheetPictureBar {
     }
 
     //清理评论文本内容以及评论的图片内容。
-    public void clear(){
+    public void refresh(){
         mEditText.setText("");
         mImages.clear();
         mAdapter.notifyDataSetChanged();

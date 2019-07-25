@@ -118,7 +118,6 @@ public class DetailCommentAdapter extends BaseQuickAdapter<ReplyComment, BaseVie
         }
     }
 
-
     public interface OnCommentReplyClickListener {
         void onUserClick(ReplyComment comment);
 

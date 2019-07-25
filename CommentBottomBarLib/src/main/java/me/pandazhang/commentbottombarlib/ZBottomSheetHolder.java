@@ -24,7 +24,6 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
     FrameLayout mCoverLayout;
     FrameLayout mRootLayout;
     private Context mContext;
-    private int padding;
     private  int width;
     private OnReleaseImageListener onReleaseImageListener;
     private View mItemView;
@@ -109,7 +108,7 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
         Glide.with(mContext)
                 .load(imageFile.getPath())
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .override(width, (int) (width*0.66))//这里的单位是px
+                .override(width,width)//这里的单位是px
                 .into(mCoverView);
     }
 

@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
                 mAdapter.addData(comment);
                 mAdapter.notifyDataSetChanged();
                 commentZBSP.dismiss();
-                commentZBSP.clear();
+                commentZBSP.refresh();
             }
         });
     }
