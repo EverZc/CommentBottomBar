@@ -2,7 +2,6 @@ package me.pandazhang.commentbottombarlib;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -24,7 +23,7 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
     FrameLayout mCoverLayout;
     FrameLayout mRootLayout;
     private Context mContext;
-    private  int width;
+    private  int mWidth;
     private OnReleaseImageListener onReleaseImageListener;
     private View mItemView;
     private ImageFile mImageFile;
@@ -33,11 +32,15 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
     public ZBottomSheetHolder(View itemView) {
         super(itemView);
         initView(itemView);
-        WindowManager wm = (WindowManager) mContext
-                .getSystemService(Context.WINDOW_SERVICE);
-         width = wm.getDefaultDisplay().getWidth();
-
         initListener();
+        mWidth =getItemWidth();
+    }
+
+    //获取到当前item的宽，用于将该item设置为正方形
+    private int getItemWidth(){
+        WindowManager windowManager = (WindowManager) mContext
+                .getSystemService(Context.WINDOW_SERVICE);
+        return  windowManager.getDefaultDisplay().getWidth();
     }
 
     private void initView(View itemView){
@@ -108,13 +111,16 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
         Glide.with(mContext)
                 .load(imageFile.getPath())
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .override(width,width)//这里的单位是px
+                .override(mWidth, mWidth)//这里的单位是px
                 .into(mCoverView);
     }
 
     public interface OnReleaseImageListener {
+        //添加图片的点击事件
         void onAddClick();
+        //删除图片的点击事件
         void onDelClick(ImageFile imageFile, int position);
+        //已经添加的图片点击事件（常用语在底部评论框中点击已经添加的图片大图显示）
         void onClick(int positon);
     }
 }

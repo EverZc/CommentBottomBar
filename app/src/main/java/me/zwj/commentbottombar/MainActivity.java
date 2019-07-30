@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
                 commentZBSP.dismiss();
                 commentZBSP.refresh();
             }
+
+            @Override
+            public void onPictureClick(int positon) {
+                Log.e("点击图片的位置",positon+"");
+            }
         });
     }
 

@@ -34,9 +34,6 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         mMaxCount = maxCount;
     }
 
-    public void setOnReleaseImageListener(ZBottomSheetHolder.OnReleaseImageListener onReleaseImageListener) {
-        this.onReleaseImageListener = onReleaseImageListener;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,13 +50,8 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public boolean isEmpty(){
-        return mImageFiles.isEmpty();
-    }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         ZBottomSheetHolder imageHolder = (ZBottomSheetHolder) holder;
         final View itemView = imageHolder.getItemView();
         itemView.post(new Runnable() {
@@ -70,9 +62,8 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemView.setLayoutParams(params);
             }
         });
-
-
         imageHolder.setOnReleaseImageListener(onReleaseImageListener);
+
         switch (getItemViewType(position)){
             case NORMAL_IMAGE_TYPE:
                 ImageFile imageFile = mImageFiles.get(position);
@@ -84,10 +75,18 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
         }
     }
-
     @Override
     public int getItemCount() {
         return mImageFiles.size() < mMaxCount ? mImageFiles.size() + 1 : mImageFiles.size();
+    }
+
+    public boolean isEmpty(){
+        return mImageFiles.isEmpty();
+    }
+
+
+    public void setOnReleaseImageListener(ZBottomSheetHolder.OnReleaseImageListener onReleaseImageListener) {
+        this.onReleaseImageListener = onReleaseImageListener;
     }
 
     public void clearData(){

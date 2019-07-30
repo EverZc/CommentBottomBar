@@ -145,7 +145,9 @@ public class ZBottomSheetPictureBar {
 
             @Override
             public void onClick(int positon) {
-
+                if (mListener!=null){
+                    mListener.onPictureClick(positon);
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -214,6 +216,8 @@ public class ZBottomSheetPictureBar {
         void onAddClick();
         //评论提交
         void onCommitClick(ArrayList<ImageFile> images,EditText content);
+
+        void onPictureClick(int positon);
     }
 
     public void setOnSeetBarOnClickListener(OnSheetBarOnClickListener listener){
