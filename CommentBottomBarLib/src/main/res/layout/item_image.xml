@@ -6,38 +6,33 @@
     android:orientation="vertical">
 
     <FrameLayout
-
-        android:background="#ccc"
         android:id="@+id/add_layout"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#ccc">
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/iv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@drawable/release_camera" />
-
     </FrameLayout>
 
-        <FrameLayout
+    <FrameLayout
         android:id="@+id/cover_layout"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_cover"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/iv_delete"
-
             android:layout_width="@dimen/dp_nineteen"
             android:layout_height="@dimen/dp_nineteen"
             android:layout_gravity="top|right"
