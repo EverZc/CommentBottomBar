@@ -86,6 +86,8 @@ CommentBottomBar使用起来非常简单
     }
 ```
 
+框架内部实现功能见源码或[Wiki](https://github.com/EverZc/CommentBottomBar/wiki)
+
 ## 混淆代码
 ```java
 # glide 的混淆代码
