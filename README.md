@@ -97,9 +97,7 @@ CommentBottomBar使用起来非常简单
   public *;
 }
 # CommentBottomBar 的混淆代码
--keep class me.zwj.commentbottombar.** {
-    *;
- }
+
 ```
 
 ## 常见问题
