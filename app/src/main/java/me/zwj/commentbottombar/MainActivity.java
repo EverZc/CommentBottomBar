@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements DetailCommentAdap
             public void onAddClick() {
                 Intent intent = new Intent(MainActivity.this, ImagePickActivityPicker.class);
                 intent.putExtra(IS_NEED_CAMERA, true);
-                int maxNumber = commentZBSP.getAdapterData().isEmpty() ?
-                        ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getAdapterData().size();
+                int maxNumber = commentZBSP.getImageDatas().isEmpty() ?
+                        ZBottomConstant.ARTICLE_IMAGE_MAX : ZBottomConstant.ARTICLE_IMAGE_MAX - commentZBSP.getImageDatas().size();
                 intent.putExtra(FilePicker.MAX_NUMBER, maxNumber);
                 startActivityForResult(intent, ZBottomConstant.REQUEST_CODE_PICK_IMAGE);
             }

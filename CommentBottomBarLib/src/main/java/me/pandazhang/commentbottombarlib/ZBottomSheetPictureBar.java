@@ -180,14 +180,11 @@ public class ZBottomSheetPictureBar {
     }
 
     //获取当前评论框内的图片
-    public ArrayList<ImageFile> getAdapterData(){
+    public ArrayList<ImageFile> getImageDatas(){
         return mImages;
     }
 
-    //获取弹出框图片的adapter
-    public ZBottomSheetAdapter getAdapter(){
-        return mAdapter;
-    }
+
 
     //获取评论的内容
     public String getCommentText() {
