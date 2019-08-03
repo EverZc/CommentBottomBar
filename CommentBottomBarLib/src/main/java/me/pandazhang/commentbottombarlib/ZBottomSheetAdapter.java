@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.view.WindowManager;
 
 
 import java.util.ArrayList;
@@ -35,10 +35,17 @@ public class ZBottomSheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    //获取到当前item的宽，用于将该item设置为正方形
+    private int getItemWidth() {
+        WindowManager windowManager = (WindowManager) mContext
+                .getSystemService(Context.WINDOW_SERVICE);
+        return windowManager.getDefaultDisplay().getWidth();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_image, parent, false);
-        return new ZBottomSheetHolder(itemView);
+        return new ZBottomSheetHolder(itemView,getItemWidth());
     }
 
     @Override

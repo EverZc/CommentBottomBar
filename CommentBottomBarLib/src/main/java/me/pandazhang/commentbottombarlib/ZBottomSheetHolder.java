@@ -32,19 +32,14 @@ public class ZBottomSheetHolder extends RecyclerView.ViewHolder {
     private ImageFile mImageFile;
 
 
-    public ZBottomSheetHolder(View itemView) {
+    public ZBottomSheetHolder(View itemView,int width) {
         super(itemView);
         initView(itemView);
         initListener();
-        mWidth = getItemWidth();
+        this.mWidth = width;
     }
 
-    //获取到当前item的宽，用于将该item设置为正方形
-    private int getItemWidth() {
-        WindowManager windowManager = (WindowManager) mContext
-                .getSystemService(Context.WINDOW_SERVICE);
-        return windowManager.getDefaultDisplay().getWidth();
-    }
+
 
     private void initView(View itemView) {
         mItemView = itemView;

@@ -56,21 +56,6 @@ public class ZBottomSheetPictureBar {
     }
 
     private void initView() {
-        mEditText = (EditText) mRootView.findViewById(R.id.et_comment);
-        mBtnCommit = (TextView) mRootView.findViewById(R.id.btn_comment);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        initRecycler();
-        showSoftInput(mEditText,mContext);
-        mBtnCommit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener!=null){
-                    mListener.onCommitClick(mImages,mEditText);
-                    mBtnCommit.setEnabled(false);
-                }
-            }
-        });
-        mBtnCommit.setEnabled(false);
         mDialog = new ZBottomDialog(mContext);
         mDialog.setContentView(mRootView);
         mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -78,6 +63,22 @@ public class ZBottomSheetPictureBar {
             public void onDismiss(DialogInterface dialog) {
                 hideSoftInput(mContext, mEditText);
                 mDialog.hide();
+            }
+        });
+        mEditText = (EditText) mRootView.findViewById(R.id.et_comment);
+        mBtnCommit = (TextView) mRootView.findViewById(R.id.btn_comment);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        initRecycler();
+        showSoftInput(mEditText,mContext);
+
+        mBtnCommit.setEnabled(false);
+        mBtnCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener!=null){
+                    mListener.onCommitClick(mImages,mEditText);
+                    mBtnCommit.setEnabled(false);
+                }
             }
         });
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -109,6 +110,7 @@ public class ZBottomSheetPictureBar {
                 }
             }
         });
+
     }
 
     private void initRecycler() {
