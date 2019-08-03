@@ -4,8 +4,10 @@
 
 ## 新框架发布，欢迎大家Star
 
-<br>
-通常在社交类型的APP上都会有这么一个需求，就是评论的时候通常要带有文字或者是文字+图片。针对这一需求设计了一款相关的控件CommentBottomBar。图片选择框架使用[Zfilepicker](https://github.com/EverZc/Zfilepicker)，本框架无需处理复杂的逻辑，只需要简单调用即可。
+通常在社交类型的APP上都会有这么一个需求，就是评论的时候通常要带有文字或者是文字+图片。针对这一需求设计了一款相关的控件CommentBottomBar。
+
+本框架无需处理复杂的逻辑，只需要简单调用即可，本框架图片选择使用[Zfilepicker](https://github.com/EverZc/Zfilepicker)。
+
 
 ## 效果图
 
